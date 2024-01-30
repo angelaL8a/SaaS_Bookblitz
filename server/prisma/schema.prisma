@@ -37,11 +37,12 @@ model UserInCompany {
   gender    String?
 
   appointments Appointment[]
-  shift        Shift[]
+  shifts       Shift[]
   comments     CommentOnAppointment[]
 
   // strictly for employees
   position       String?
+  startingDate   DateTime?
   paymentPerHour Float?
   city           String?
   state          String?
