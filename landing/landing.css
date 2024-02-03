@@ -1,0 +1,308 @@
+html {
+    height: 100%;
+}
+
+*,*::after,*::before {
+    box-sizing: border-box;
+    font-family: Poppins;
+}
+
+.container{
+    margin: auto;
+}
+
+body {
+    background-color: #E8FFFE;
+    margin: 0;
+    background-repeat: no-repeat;
+}
+
+header {
+    align-items: center;
+    justify-content: space-between;
+    gap: 2em;
+    padding: 1.5em 0;
+    max-width: 90%;
+}
+
+.hero {
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background: radial-gradient(50% 50% at 50% 50%, #F3FBFB 0%, #F3CFFF 34%, #E8FFFE 100%);
+    display: flex;
+}
+
+.dummy {
+    background-color: #E8FFFE;
+    border: 1px solid #7BF4F4;
+}
+
+.dummy img{
+    height: 100%;
+    margin: auto;
+}
+
+.slide {
+    width: 948px;
+    height: 429px;
+    object-fit: cover;
+    margin: 30px auto;
+}
+
+a {
+    display: inline-block;
+    text-decoration: none;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+h1 {
+    text-align: center;
+    margin: 0%;
+    padding: 20px 0px;
+}
+
+.row {
+    display: flex;
+}
+
+.hero .row{
+    align-items: center;
+    justify-content: center;
+}
+
+.comment .row{
+    align-items: center;
+    justify-content: center;
+}
+
+nav ul{
+    gap: 2em;
+    align-items: center;
+}
+
+nav a{
+    font-weight: 500;
+    font-size: 18px;
+    padding: 9px 25px;
+}
+
+nav .white-btn a{
+    color: #9E0FD0;
+}
+
+nav .pink-btn a{
+    color: #F5F5F5;
+}
+
+.white-btn {
+    color: #9E0FD0;
+    background-color: white;
+    border: #7BF4F4;
+    border-radius: 22px;
+    filter: drop-shadow(6px 21px 20.9px rgba(213, 145, 255, 0.18)) drop-shadow(-7px -6px 9.3px #FFF);
+}
+
+.pink-btn{
+    border-radius: 22px;
+    background: linear-gradient(180deg, #E8C4FF 0%, rgba(212, 146, 255, 0.79) 100%);
+    box-shadow: 0px 4px 14.3px 0px rgba(0, 0, 0, 0.22);
+    color: #F5F5F5;
+}
+
+.logo{
+    color: black;
+}
+
+h3{
+    margin: auto 0;
+}
+
+p{
+    margin: auto 0;
+}
+
+.try-btn{
+    margin: auto;
+    font-weight: 500;
+    font-size: 18px;
+    padding: 9px 25px;
+}
+
+#spreadsheets{
+    margin-left: 139px;
+    height: 100%;
+    width: 300px;
+}
+
+.try{
+    margin: auto;
+}
+
+.trysection{
+    margin-top: 15px;
+}
+
+
+.comment{
+        width: 100%;
+        height: 500px;
+        margin: auto;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background:linear-gradient(rgba(247, 255, 255, 0.57) 0%, rgba(224, 245, 245, 0.57) 34%, rgba(236, 216, 255, 0.57) 100%);
+        backdrop-filter: blur(33.5px);
+    }
+
+.client-card{
+    width: 350px;
+    height: 350px;
+    flex-shrink: 0;
+    border-radius: 55px;
+    border: 15px solid rgba(0, 0, 0, 0.04);
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    margin: 0 15px;
+    overflow: hidden;
+    position: relative;
+}
+
+.pink{
+    background: linear-gradient(180deg, rgba(241, 190, 243, 0.43) 0%, rgba(251, 137, 255, 0.43) 100%);
+}
+
+.cyan{
+    background: linear-gradient(180deg, rgba(164, 226, 251, 0.43) 0%, rgba(137, 221, 255, 0.43) 100%);
+}
+
+.description{
+    width: 948px;
+}
+
+.quote-mark{
+    position: absolute;
+      top: 10px;
+      left: 10px;
+}
+
+.client-pic{
+    position: absolute;
+      top: 10px;
+      left: 80px;
+}
+
+.client-card p{
+    position: absolute;
+    top: 210px;
+    left: 10px;
+    text-align: center;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 300;
+}
+
+.tutorial{
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(rgba(236, 216, 255, 0.57) 0%, rgba(224, 245, 245, 0.57) 66%, rgba(247, 255, 255, 0.57) 100%);
+    backdrop-filter: blur(33.5px);
+}
+
+.tutorial-card{
+    width: 350px;
+    height: 350px;
+    margin: 0 15px;
+    overflow: hidden;
+    position: relative;
+}
+
+.tutorial-color{
+    width: 350px;
+    height: 250px;
+    flex-shrink: 0;
+    border-radius: 55px;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+
+}
+
+.blueGrad{
+    background: linear-gradient(180deg, #E1F6FF 0%, #AAE7FF 100%);
+}
+
+.magentaGrad{
+    background: linear-gradient(180deg, #FEDEFF 0%, #FCB4FF 100%);
+}
+
+.purpleGrad{
+    background: linear-gradient(180deg, #F2E6FF 0%, #E0C2FF 100%);
+}
+
+.tutorial .row{
+    align-items: center;
+    justify-content: center;
+}
+
+.play-pic{
+    width: 350px;
+    height: 215px;
+    position: absolute;
+    top: 20px;
+}
+
+.tutorial-card p{
+    margin-top: 10px;
+    text-align: center;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 300;
+}
+
+.faq{
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(rgba(247, 255, 255, 0.57) 0%, rgba(224, 245, 245, 0.57) 66%, rgba(236, 216, 255, 0.57) 100%);
+    backdrop-filter: blur(33.5px);
+    align-items: center;
+    justify-content: center;
+}
+
+.faq-box{
+    width:1200px;
+    margin: auto;
+}
+
+footer{
+    background: rgba(80, 72, 72, 0.651);
+    margin: 0;
+}
+
+.footer-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+footer a{
+    font-weight: 500;
+    font-size: 18px;
+    padding: 9px 25px;
+}
+
+footer ul{
+    gap: 2em;
+    align-items: center;
+}
+
+.grey-btn {
+    color: #30073f;
+    border: #7BF4F4;
+    border-radius: 22px;
+    background-color: rgba(217, 217, 217, 0.16);
+    filter: drop-shadow(0px 4px 6.6px rgba(0, 0, 0, 0.03));
+}

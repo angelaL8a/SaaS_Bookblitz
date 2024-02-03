@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <link rel="stylesheet" href="landing.css">
+    <link rel="stylesheet" href="faq.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+</head>
+<body>
+<div class="container">
+    <!-- nav bar -->
+    <header class="container row">
+        <a href="#" class="logo">
+            <h1>BookBlitz</h1>
+        </a>
+        <nav>
+            <ul class="row">
+                <li class="white-btn"><a href="#">Tutorials</a></li>
+                <li class="white-btn"><a href="#">User Reviews</a></li>
+                <li class="white-btn"><a href="#">FAQ</a></li>
+                <li class="pink-btn"><a href="#">Sign up/Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- hero -->
+    <div class="container hero">
+        <div class="container">
+            <h1>Your All-in-One Management App</h1>
+
+            <!-- slide -->
+            <div class="dummy slide row">
+                <img src="img/scheduleDemo.png">
+            </div>
+
+            
+            <!-- description -->
+                <div class="row description">
+                    <div>
+                        <div>
+                            <h3>Full control, from scheduling to payroll</h3>
+                            <p>Still doing payroll manually every month?</p>
+                            <p>Having trouble managing employee shifts?</p>
+                            <p>Looking for a way to handle booking elegantly?</p>
+                        </div>
+                        <div class="row trysection">
+                            <p class="try">We've got your back!</p>
+                            <a href="#" class="pink-btn try-btn try">Try Now</a>
+                        </div>
+                    </div>
+                    <img src="img/toomanyspreadsheets.jpg" id="spreadsheets" alt="suffering from spreadsheets">
+                </div>
+        </div>
+    </div>
+    
+    <!--unse comment-->
+    <div class="container comment">
+        <h1>What our clients have to say</h1>
+        <div class="row">
+            <div class="client-card pink">
+                <img src="img/quote.png" class="quote-mark" alt="quotation mark">
+                <img src="img/clientpic1.png" class="client-pic" alt="client's picture">
+                <p>Amazing, never imagine finishing all payroll with just one click before using BookBlitz</p>
+            </div>
+            <div class="client-card blue">
+                <img src="img/quote.png" class="quote-mark" alt="quotation mark">
+                <img src="img/clientpic2.png" class="client-pic" alt="client's picture">
+                <p>Powerful and easy to use! It book with a blitz!</p>
+            </div>
+            <div class="client-card pink">
+                <img src="img/quote.png" class="quote-mark" alt="quotation mark">
+                <img src="img/clientpic3.png" class="client-pic" alt="client's picture">
+                <p>Sales went up and my clients were pleased with the clean booking system</p>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- tutorial -->
+    <div class="container tutorial">
+        <h1>How it works</h1>
+        <div class="row">
+            <div class="tutorial-card">
+                <div class="tutorial-color blueGrad">
+                        <img src="img/play.png" class="play-pic" alt="client's picture">
+                </div>
+                <p>Authentication</p>
+            </div>
+            <div class="tutorial-card">
+                <div class="tutorial-color magentaGrad">
+                    <img src="img/play.png" class="play-pic" alt="client's picture">
+                </div>
+                <p>Authentication</p>
+            </div>
+            <div class="tutorial-card ">
+                <div class="tutorial-color purpleGrad">
+                    <img src="img/play.png" class="play-pic" alt="client's picture">
+                </div>
+                <p>Authentication</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- FAQ -->
+    <div class="container faq">
+        <h1>Frequently Asked Questions</h1>
+        <div class="faq-box">
+        <ul class="m-d expand-list">
+            <li data-md-content="200">
+                <label name="tab" for="tab1" tabindex="-1" class="tab_lab" role="tab">Who should use Bookblitz? +</label>
+                <input type="checkbox" checked class="tab" id="tab1" tabindex="0" />
+                <span class="open-close-icon">
+                    <i class="fas fa-plus"></i>
+                    <i class="fas fa-minus"></i>
+                </span>
+                <div class="content">
+                    All businesses are welcomed to use Bookblitz. We aims to provide a comprehensive solution to help you manage your business.
+                </div>
+            </li>
+            <li data-md-content="300">
+                    <label name="tab" for="tab2" tabindex="-1" class="tab_lab" role="tab">Do I need to upgrade my computer to use Bookblitz? +</label>
+                    <input type="checkbox" class="tab" id="tab2" tabindex="0" />
+                    <span class="open-close-icon"><i class="fas fa-plus"></i><i class="fas fa-minus"></i></span>
+                    <div class="content">
+                        Bookblitz is an online application that mainly process data in the server. Clients can access our services anytime with any device that connects to the internet.                </div>
+            </li>
+            <li data-md-content="600">
+                    <label name="tab" for="tab3" tabindex="-1" class="tab_lab" role="tab">Is my data safe? +</label>
+                    <input type="checkbox" class="tab" id="tab3" tabindex="0" />
+                    <span class="open-close-icon"><i class="fas fa-plus"></i><i class="fas fa-minus"></i></span>
+              <div class="content">
+                <p>
+                    Yes, your data is saved in our online database, which can only be access by related logged in users.
+                </p>
+                    </div>
+            </li>
+        </ul>
+    </div>
+    </div>
+
+</div>
+</body>
+
+<!-- footer -->
+<footer>
+    <div class="footer-container">
+        <ul class="row">
+            <li class="grey-btn"><a href="#">More</a></li>
+            <li class="grey-btn"><a href="#">About</a></li>
+            <li class="grey-btn"><a href="#">Terms and Conditions</a></li>
+        </ul>
+    </div>
+</footer>
+</html>
+
