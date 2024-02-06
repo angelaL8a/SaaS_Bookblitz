@@ -87,7 +87,7 @@ model Appointment {
   title               String            @db.VarChar(250)
   description         String            @db.VarChar(450)
   fee                 Float
-  rating              Int
+  rating              Int?
   status              AppointmentStatus @default(Idle)
 
   shift   Shift  @relation(fields: [shiftId], references: [id], onDelete: Cascade, onUpdate: Cascade)

@@ -12,6 +12,7 @@ import { appointmentTypeDefs } from "./typeDefs/appointment.js";
 
 import { userResolvers } from "./resolvers/user.js";
 import { companyResolvers } from "./resolvers/company.js";
+import { shiftResolvers } from "./resolvers/shift.js";
 
 const rootTypeDefs = gql`
   type Query {
@@ -45,4 +46,5 @@ export const resolvers = [
   { EmailAddress: EmailAddressResolver },
   userResolvers,
   companyResolvers,
+  shiftResolvers,
 ];
