@@ -1,0 +1,35 @@
+*,*::after,*::before {
+    box-sizing: border-box;
+    font-family: Poppins;
+}
+
+body {
+    background: url(../img/login_bg.jpg), lightgray 50% / cover no-repeat;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   }
+
+.transparent_window{
+    border-radius: 50px;
+    border: 1px solid rgba(105, 246, 255, 0.27);
+    background: rgba(202, 255, 255, 0.16);
+    box-shadow: 0px 4px 16.5px 0px rgba(0, 0, 0, 0.09);
+    backdrop-filter: blur(17.549999237060547px);
+   }
+
+.sing_in_btn{
+    border-radius: 66px;
+    border: 1px solid rgba(122, 191, 255, 0.10);
+    background: #7B9FE1;
+    box-shadow: 0px 4px 15.8px 0px rgba(126, 88, 175, 0.24);
+    color: #FFF;
+    font-family: Poppins;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 135.5%;
+}
