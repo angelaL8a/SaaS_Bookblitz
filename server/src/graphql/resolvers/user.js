@@ -49,7 +49,25 @@ export const userResolvers = {
         companyURL,
       } = args.userDto;
 
+      // Hash the password
       const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+      // Check if the email provided by the user already exists in the database
+      const emailExists = await db.user.findUnique({
+        where: { email: email },
+      });
+
+      // Check if the username provided by the user already exists in the database
+      const usernameExists = await db.user.findUnique({
+        where: { username: username },
+      });
+
+      // If the email or username already exists, throw a GraphQLError
+      if (emailExists || usernameExists) {
+        throw new GraphQLError("Email or username already exists!", {
+          extensions: { code: BAD_USER_INPUT_CODE }, // This code indicates a bad user input
+        });
+      }
 
       // Create the user
       const user = await db.user.create({
@@ -82,24 +100,43 @@ export const userResolvers = {
       return user;
     },
 
+    /**
+     * Resolver function for user login.
+     * Verifies the provided username and password against the database.
+     * If the credentials are valid, generates a JWT token and returns it.
+     * Throws an error if the username or password is incorrect.
+     * @param {Object} _ - Unused argument (parent object).
+     * @param {Object} args - Arguments containing the user DTO with username and password.
+     * @returns {String} - JWT token if login is successful.
+     * @throws {GraphQLError} - Throws an error if the username or password is incorrect.
+     */
     LoginUser: async (_, args) => {
+      // Extract username and password from the user DTO
       const { username, password } = args.userDto;
-
+      // Find the user in the database based on the provided username
       const user = await db.user.findUnique({
         where: { username },
       });
-
-      const matchPassword = await bcrypt.compareSync(password, user.password);
-
-      if (!matchPassword)
-        throw new GraphQLError("The password is incorrect!", {
+      // Error message for incorrect username or password
+      const errorMsg = "Username or password incorrect.";
+      // Throw error if user does not exist (invalid username)
+      if (!user) {
+        throw new GraphQLError(errorMsg, {
           extensions: { code: BAD_USER_INPUT_CODE },
         });
-
+      }
+      // Compare the provided password with the hashed password stored in the database
+      const matchPassword = await bcrypt.compareSync(password, user.password);
+      // Throw error if passwords do not match (invalid password)
+      if (!matchPassword)
+        throw new GraphQLError(errorMsg, {
+          extensions: { code: BAD_USER_INPUT_CODE },
+        });
+      // Generate JWT token with user ID payload
       const token = jwt.sign({ id: user.id }, envs.JWT_SECRET, {
         expiresIn: "30d",
       });
-
+      // Return the JWT token
       return token;
     },
   },
