@@ -28,21 +28,21 @@ const dataWelcome = [
 
 const WelcomePage = () => {
   return (
-    <div className="bg-gradient-to-br h-screen from-purple-200 via-blue-200 to-teal-100">
-      <h1 className="welcome_text text-[120px] text-center font-[800] pt-5">
+    <div className="bg-gradient-to-br min-h-screen from-purple-200 via-blue-200 to-teal-100">
+      <h1 className="welcome_text text-[60px] md:text-[90px] lg:text-[100px] text-center font-[800] pt-10 lg:pt-20">
         Welcome!
       </h1>
 
-      <div className="max-w-[1500px] mx-auto mt-10 flex items-center gap-12">
+      <div className="max-w-[1300px] mx-auto mt-10 px-5 flex flex-col lg:flex-row items-center gap-20 lg:gap-6 pb-[100px]">
         {dataWelcome.map((item, index) => (
           <div
             key={index}
             className={cn(
-              "welcome_card p-8 rounded-[26px] flex flex-col items-center gap-5",
-              item.type === "register" ? "-mt-[35px]" : ""
+              "welcome_card p-8 rounded-[26px] max-w-[400px] flex flex-col items-center gap-5",
+              item.type === "register" ? "lg:-mt-[35px]" : ""
             )}
           >
-            <div className="w-[250px] h-[250px] overflow-hidden rounded-full">
+            <div className="w-[220px] h-[220px] overflow-hidden rounded-full">
               <img
                 src={item.img}
                 alt={item.title}
@@ -50,17 +50,25 @@ const WelcomePage = () => {
               />
             </div>
 
-            <h3 className="text-center text-[55px]">{item.title}</h3>
+            <h3 className="text-center text-[45px]">{item.title}</h3>
 
-            <p className="text-[30px] text-center font-poppins">{item.text}</p>
-
+            <p className="text-[20px] text-center font-poppins">{item.text}</p>
+            {/* Register and login buttons */}
             {item.type === "register" ? (
-              <div className="mt-5 -mb-[60px] flex items-center gap-5">
-                <Button asChild className="rounded-full px-10" size="xl">
+              <div className="mt-5 lg:-mb-[60px] -mb-[50px] flex items-center gap-5">
+                <Button
+                  asChild
+                  className="rounded-full text-xl py-2 lg:text-2xl lg:py-[10px] lg:px-10 h-auto"
+                  size="lg"
+                >
                   <Link to="/auth/login">Log in</Link>
                 </Button>
 
-                <Button asChild className="rounded-full px-10" size="xl">
+                <Button
+                  asChild
+                  className="rounded-full text-xl py-2 lg:text-2xl lg:py-[10px] lg:px-10 h-auto"
+                  size="lg"
+                >
                   <Link to="/auth/register">Register</Link>
                 </Button>
               </div>

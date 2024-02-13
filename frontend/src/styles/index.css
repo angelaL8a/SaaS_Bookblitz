@@ -29,7 +29,7 @@
   box-shadow: 0px 4px 15.2px 0px rgba(0, 0, 0, 0.06);
 }
 
-.welcome_button {
+.custom_button {
   border-radius: 90px;
   border: 1px solid rgba(0, 0, 0, 0.04);
   background: linear-gradient(
@@ -80,8 +80,54 @@
 }
 
 .register_input_info {
+  border-radius: 8px;
   border: 1px solid rgba(168, 116, 251, 0.15);
   background: rgba(236, 236, 236, 0.86);
   box-shadow: -3px -3px 9.3px 0px rgba(255, 255, 255, 0.48),
     0px 1px 10.2px 0px rgba(0, 0, 0, 0.11);
+}
+
+.auth_variant_button {
+  border-radius: 66px;
+  border: 1px solid rgba(172, 122, 255, 0.1);
+  background: #ce82ff;
+  box-shadow: 0px 4px 15.8px 0px rgba(126, 88, 175, 0.24);
+  color: white;
+}
+
+.auth_variant_button_2 {
+  border-radius: 66px;
+  border: 1px solid rgba(122, 191, 255, 0.1);
+  background: #7b9fe1;
+  box-shadow: 0px 4px 15.8px 0px rgba(126, 88, 175, 0.24);
+  color: white;
+}
+
+.background_color_login_page {
+  background: radial-gradient(
+    79.27% 70.92% at 52.4% 56.18%,
+    #daabff 0%,
+    #e1fbff 100%
+  );
+}
+
+.login_card_bg {
+  border-radius: 50px;
+  border: 1px solid rgba(105, 246, 255, 0.27);
+  background: rgba(202, 255, 255, 0.16);
+  box-shadow: 0px 4px 16.5px 0px rgba(0, 0, 0, 0.09);
+  backdrop-filter: blur(17.549999237060547px);
+}
+
+.login_text {
+  background: linear-gradient(
+    180deg,
+    #8aa2e2 0%,
+    #94d7ec 0.01%,
+    #5c8ed6 57.96%,
+    #7ca0e1 100%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
