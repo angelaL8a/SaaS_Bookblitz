@@ -1,8 +1,18 @@
-import dotenv from "dotenv";
+// This file configures the necessary environment variables for the application.
+// Environment variables are sourced from a .env file and validated using env-var library.
 
-// Configure environment variables from the '.env' file
-dotenv.config(); // Load environment variables defined in the '.env' file into the Node.js process.
+import "dotenv/config"; // Loads environment variables from the .env file.
 
-// Define the port on which the server will listen for HTTP requests.
-export const PORT = process.env.PORT || 4000; // Configure the server port
-// If an environment variable 'PORT' is found, it will be used; otherwise, the default port 4000 will be used.
+import env from "env-var"; // Imports the env-var library for secure environment variable validation and retrieval.
+
+export const envs = {
+  // Defines an object "envs" to store the environment variables required by the application.
+
+  PORT: env.get("PORT").required().asPortNumber(),
+  // Defines the "PORT" environment variable and retrieves it from env-var as a port number.
+  // This variable is required to be present in the .env file.
+
+  JWT_SECRET: env.get("JWT_SECRET").required().asString(),
+  // Defines the "JWT_SECRET" environment variable and retrieves it from env-var as a string.
+  // This variable is required to be present in the .env file and should be a string.
+};

@@ -1,0 +1,133 @@
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  font-family: "Outfit", sans-serif;
+}
+
+/* Extra styles */
+.welcome_text {
+  background: linear-gradient(180deg, #d39aff 0%, #9bb1ff 69.94%, #929dff 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.welcome_card {
+  background: linear-gradient(
+    180deg,
+    #fff 0%,
+    #fff 0.01%,
+    rgba(246, 252, 255, 0.77) 49.6%,
+    rgba(250, 253, 255, 0.88) 100%
+  );
+  box-shadow: 0px 4px 15.2px 0px rgba(0, 0, 0, 0.06);
+}
+
+.custom_button {
+  border-radius: 90px;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  background: linear-gradient(
+    180deg,
+    rgba(239, 249, 255, 0.68) 0%,
+    rgba(245, 251, 255, 0) 100%
+  );
+  box-shadow: 0px 4px 15.8px 0px rgba(0, 0, 0, 0.06), -7px -6px 9.3px 0px #fff;
+  backdrop-filter: blur(31.049999237060547px);
+}
+
+.background_img_register_page {
+  background-image: url("/bg/register_page_bg.png");
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: rgb(211, 211, 211, 0.5);
+}
+
+.background_color_register_page {
+  background: radial-gradient(
+    79.27% 70.92% at 52.4% 56.18%,
+    #daabff 0%,
+    #e1fbff 100%
+  );
+}
+
+.register_button {
+  background: linear-gradient(180deg, #cabdff 0%, #c6abff 0.01%, #b94bff 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.register_card_bg {
+  border: 1px solid rgba(153, 105, 255, 0.27);
+  background: rgba(200, 192, 255, 0.23);
+  backdrop-filter: blur(17.549999237060547px);
+}
+
+.register_input_name {
+  border-radius: 8px;
+  border: 1px solid rgba(165, 133, 255, 0.59);
+  background: rgba(182, 172, 248, 0.28);
+  box-shadow: 0px 4px 14.1px 0px rgba(0, 0, 0, 0.06);
+}
+
+.register_input_info {
+  border-radius: 8px;
+  border: 1px solid rgba(168, 116, 251, 0.15);
+  background: rgba(236, 236, 236, 0.86);
+  box-shadow: -3px -3px 9.3px 0px rgba(255, 255, 255, 0.48),
+    0px 1px 10.2px 0px rgba(0, 0, 0, 0.11);
+}
+
+.auth_variant_button {
+  border-radius: 66px;
+  border: 1px solid rgba(172, 122, 255, 0.1);
+  background: #ce82ff;
+  box-shadow: 0px 4px 15.8px 0px rgba(126, 88, 175, 0.24);
+  color: white;
+}
+
+.auth_variant_button_2 {
+  border-radius: 66px;
+  border: 1px solid rgba(122, 191, 255, 0.1);
+  background: #7b9fe1;
+  box-shadow: 0px 4px 15.8px 0px rgba(126, 88, 175, 0.24);
+  color: white;
+}
+
+.background_color_login_page {
+  background: radial-gradient(
+    79.27% 70.92% at 52.4% 56.18%,
+    #daabff 0%,
+    #e1fbff 100%
+  );
+}
+
+.login_card_bg {
+  border-radius: 50px;
+  border: 1px solid rgba(105, 246, 255, 0.27);
+  background: rgba(202, 255, 255, 0.16);
+  box-shadow: 0px 4px 16.5px 0px rgba(0, 0, 0, 0.09);
+  backdrop-filter: blur(17.549999237060547px);
+}
+
+.login_text {
+  background: linear-gradient(
+    180deg,
+    #8aa2e2 0%,
+    #94d7ec 0.01%,
+    #5c8ed6 57.96%,
+    #7ca0e1 100%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
