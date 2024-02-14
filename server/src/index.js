@@ -10,7 +10,10 @@ import { typeDefs, resolvers } from "./graphql/schema.js";
 import { expressMiddleware } from "@apollo/server/express4";
 import { getReqToken } from "./utils/get-req-token.js";
 import { db } from "./db/index.js";
-import { COMPANY_AUTH_ROUTES } from "./graphql/config.js";
+import {
+  COMPANY_AUTH_ROUTES,
+  COMPANY_MEMBER_ROUTES,
+} from "./graphql/config.js";
 
 const app = express(); // Create an instance of the Express application.
 
@@ -55,16 +58,18 @@ const main = async () => {
         const user = await db.user.findUnique({ where: { id: data.id } });
 
         let isAdmin = false;
+        let isCompanyMember = false;
         let company = null;
 
         if (COMPANY_AUTH_ROUTES.includes(req.body.operationName) && user) {
-          const { companyId } = req.body.variables;
+          const { companyId, companyUrl } = req.body.variables;
 
           try {
-            if (companyId) {
+            if (companyId || companyUrl) {
               const companyCtx = await db.company.findFirstOrThrow({
                 where: {
-                  id: companyId,
+                  id: companyId ?? undefined,
+                  url: companyUrl ?? undefined,
                   users: {
                     some: {
                       userId: user.id,
@@ -85,7 +90,33 @@ const main = async () => {
           }
         }
 
-        return { req, user, isAdmin, company };
+        if (COMPANY_MEMBER_ROUTES.includes(req.body.operationName) && user) {
+          const { companyUrl } = req.body.variables;
+
+          try {
+            if (companyUrl) {
+              const companyCtx = await db.company.findFirstOrThrow({
+                where: {
+                  url: companyUrl,
+                  users: {
+                    some: {
+                      userId: user.id,
+                    },
+                  },
+                },
+              });
+
+              if (companyCtx) {
+                isCompanyMember = true;
+              }
+            }
+          } catch (error) {
+            isCompanyMember = false;
+            company = null;
+          }
+        }
+
+        return { req, user, isAdmin, isCompanyMember, company };
       },
     })
   );

@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 import { GraphQLError } from "graphql";
 import { db } from "../../db/index.js";
-import { FORBIDDEN_ERROR_CODE } from "../error-codes.js";
+import { FORBIDDEN_ERROR_CODE, NOT_FOUND_CODE } from "../error-codes.js";
 import { saltRounds } from "../../config/saltRounds.js";
 import { generateRandomPassword } from "../../utils/generate-random-password.js";
 import { generateRandomUsername } from "../../utils/generate-random-username.js";
@@ -20,6 +20,49 @@ export const companyResolvers = {
       } catch (error) {
         return null;
       }
+    },
+
+    users: async (company, _, context) => {
+      if (!context.isAdmin)
+        throw new GraphQLError("You must be an admin!", {
+          extensions: { code: FORBIDDEN_ERROR_CODE },
+        });
+
+      const users = await db.userInCompany.findMany({
+        where: { companyId: company.id },
+      });
+
+      return users;
+    },
+  },
+
+  UserInCompany: {
+    user: async (userInCompany) => {
+      const user = await db.user.findUnique({
+        where: { id: userInCompany.userId },
+      });
+
+      return user;
+    },
+  },
+
+  Query: {
+    GetCompany: async (_, args, context) => {
+      if (!context.isCompanyMember)
+        throw new GraphQLError("You must be a member of the company!", {
+          extensions: { code: FORBIDDEN_ERROR_CODE },
+        });
+
+      const company = await db.company.findUnique({
+        where: { url: args.companyUrl },
+      });
+
+      if (!company)
+        throw new GraphQLError("Company not found!", {
+          extensions: { code: NOT_FOUND_CODE },
+        });
+
+      return company;
     },
   },
 

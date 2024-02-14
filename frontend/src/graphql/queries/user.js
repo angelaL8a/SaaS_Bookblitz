@@ -4,6 +4,7 @@ export const GetAccount = gql`
   query GetAccount {
     GetAccount {
       id
+      name
       firstName
       lastName
       username

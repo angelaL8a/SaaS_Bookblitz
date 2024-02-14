@@ -11,7 +11,7 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "font-[300] text-[#979797] custom_button",
+        default: "font-[300] text-[#979797] custom_button rounded-full",
         destructive:
           "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
         outline:

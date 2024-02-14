@@ -55,7 +55,6 @@
 }
 
 .custom_button {
-  border-radius: 90px;
   border: 1px solid rgba(0, 0, 0, 0.04);
   background: linear-gradient(
     180deg,
@@ -155,4 +154,36 @@
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+.user_company_bg {
+  background: linear-gradient(180deg, #f7ffff 0%, #e0f5f5 34%, #ecd8ff 100%);
+}
+
+.employee_card_bg {
+  background: linear-gradient(
+    180deg,
+    #fff 0%,
+    #fff 0.01%,
+    rgba(246, 252, 255, 0.77) 49.6%,
+    rgba(250, 253, 255, 0.88) 100%
+  );
+  box-shadow: 0px 9.923px 49.4px -29px rgba(0, 0, 0, 0.4);
+}
+
+.button_add_new_user {
+  border-radius: 98px;
+  background: linear-gradient(
+    180deg,
+    #fff 0%,
+    #fff 0.01%,
+    rgba(246, 252, 255, 0.77) 49.6%,
+    rgba(250, 253, 255, 0.88) 100%
+  );
+  box-shadow: 0px 9.923px 39.692px -32px rgba(0, 0, 0, 0.39);
+}
+
+.week_days_card {
+  background: linear-gradient(180deg, #f2fcfc 0%, #f2fcfc 100%);
+  box-shadow: 3px 2px 8.6px 0px rgba(0, 0, 0, 0.14), -7px -5px 11.3px 0px #fff;
 }

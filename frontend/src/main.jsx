@@ -18,6 +18,10 @@ import RegisterPage from "./pages/auth/register";
 import WelcomePage from "./pages/welcome";
 import NotFoundPage from "./pages/not-found";
 import RootLayout from "./layouts/RootLayout";
+import AdminLayout from "./layouts/AdminLayout";
+import AdminSchedule from "./pages/app/company/admin/admin-schedule";
+import CompanyLayout from "./layouts/CompanyLayout";
+import EmployeeDetails from "./pages/app/company/admin/employee-details";
 
 // Define the router configuration
 const router = createBrowserRouter([
@@ -46,8 +50,29 @@ const router = createBrowserRouter([
         ],
       },
       {
-        path: "/app/:companyUrl/client",
-        element: <div>App client</div>,
+        path: "/app/:companyUrl",
+        element: <CompanyLayout />,
+        children: [
+          {
+            path: "admin",
+            element: <AdminLayout />,
+            children: [
+              {
+                path: "",
+                element: <AdminSchedule />,
+              },
+              { path: "employee-details", element: <EmployeeDetails /> },
+            ],
+          },
+          {
+            path: "/app/:companyUrl/client",
+            element: <div>App client</div>,
+          },
+          {
+            path: "/app/:companyUrl/employee",
+            element: <div>App employee</div>,
+          },
+        ],
       },
       {
         path: "*",

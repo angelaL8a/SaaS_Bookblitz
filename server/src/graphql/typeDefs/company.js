@@ -61,6 +61,10 @@ export const companyTypeDefs = gql`
     telephone: String!
   }
 
+  type Query {
+    GetCompany(companyUrl: String!): Company!
+  }
+
   type Mutation {
     Company_AddEmployee(
       employeeDto: AddEmployeeDto!

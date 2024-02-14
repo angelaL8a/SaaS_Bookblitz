@@ -3,11 +3,12 @@ import { gql } from "graphql-tag";
 export const userTypeDefs = gql`
   type User {
     id: ID!
+    name: String!
     firstName: String!
     lastName: String!
-    email: EmailAddress!
+    email: EmailAddress
     username: String!
-    password: String!
+    password: String
     userImageUrl: String
     userImageId: String
 

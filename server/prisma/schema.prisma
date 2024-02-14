@@ -15,7 +15,7 @@ model User {
   username  String @unique
   password  String
 
-  userImageUrl String?
+  userImageUrl String? @default("https://res.cloudinary.com/dzqcwammp/image/upload/v1707877053/team65/mswj785kdjq5lwzlx2pn.png")
   userImageId  String?
 
   companies UserInCompany[] @relation("user")

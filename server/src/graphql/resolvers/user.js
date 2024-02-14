@@ -23,6 +23,14 @@ export const userResolvers = {
 
       return companies;
     },
+
+    name: (user) => {
+      return `${user.firstName} ${user.lastName}`;
+    },
+
+    password: () => {
+      return null;
+    },
   },
 
   Query: {
