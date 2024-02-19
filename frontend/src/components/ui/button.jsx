@@ -22,6 +22,7 @@ const buttonVariants = cva(
         link: "text-primary underline-offset-4 hover:underline",
         auth: "auth_variant_button",
         auth_secondary: "auth_variant_button_2",
+        unstyled: "",
       },
       size: {
         default: "h-9 px-4 py-2",

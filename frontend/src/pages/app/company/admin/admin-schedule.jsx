@@ -1,13 +1,6 @@
 import CustomImage from "@/components/custom-image";
+import AddEmployeeModal from "@/components/admin/add-employee-modal";
 import { useGetCompany } from "@/hooks/use-company";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 
 const weekDays = [
   {
@@ -96,23 +89,7 @@ const AdminSchedule = () => {
         </div>
       </div>
 
-      <Dialog>
-        <DialogTrigger asChild>
-          <button className="button_add_new_user px-4 py-3 mt-5 font-poppins text-[#979797] text-2xl w-[380px]">
-            Add new employee
-          </button>
-        </DialogTrigger>
-
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Are you absolutely sure?</DialogTitle>
-            <DialogDescription>
-              This action cannot be undone. This will permanently delete your
-              account and remove your data from our servers.
-            </DialogDescription>
-          </DialogHeader>
-        </DialogContent>
-      </Dialog>
+      <AddEmployeeModal />
     </div>
   );
 };

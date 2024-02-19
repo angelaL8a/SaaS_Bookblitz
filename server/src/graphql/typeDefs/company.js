@@ -39,9 +39,9 @@ export const companyTypeDefs = gql`
   input AddEmployeeDto {
     firstName: String!
     lastName: String!
-    birthDate: DateTime
+    birthDate: DateTime!
     gender: String!
-    startingDate: DateTime
+    startingDate: DateTime!
     position: String!
     city: String
     state: String
