@@ -1,6 +1,8 @@
 import CustomImage from "@/components/custom-image";
 import AddEmployeeModal from "@/components/admin/add-employee-modal";
+import ScheduleBox from "../../../../components/admin/schedule-box";
 import { useGetCompany } from "@/hooks/use-company";
+import CurrentDate from "@/components/admin/current-date";
 
 const weekDays = [
   {
@@ -41,10 +43,10 @@ const AdminSchedule = () => {
   return (
     <div className="max-w-[1600px] mx-auto mt-14 px-4">
       <div className="flex items-center gap-8">
-        <div className="w-[380px]">a</div>
+        <CurrentDate />
 
         <div className="flex-1">
-          <div className="grid grid-cols-7 rounded-[24px] py-2 w-full border-b border-[rgba(0,0,0,0.09)] week_days_card">
+          <div className="grid grid-cols-7 rounded-[24px] py-2 w-full week_days_card">
             {weekDays.map((day, index) => (
               <div
                 key={index}
@@ -62,7 +64,7 @@ const AdminSchedule = () => {
           {employees?.map((user, index) => (
             <div
               key={index}
-              className="flex gap-8 h-[112px] items-center px-8 py-4 employee_card_bg rounded-[11px]"
+              className="flex gap-5 h-[112px] items-center px-8 py-4 employee_card_bg rounded-[11px]"
             >
               <CustomImage
                 src={user.user.userImageUrl}
@@ -77,11 +79,11 @@ const AdminSchedule = () => {
         </div>
 
         <div className="flex-1 h-full">
-          <div className="w-full rounded-[11px] overflow-hidden user_company_bg">
+          <div className="w-full rounded-[11px] overflow-hidden user_company_bg border-2 border-[#F4F4F4]">
             {employees.map((user, index) => (
-              <div key={index} className="h-[120px] gap-[2px] grid grid-cols-7">
-                {Array.from({ length: 7 }).map((_, index) => (
-                  <ScheduleBox key={index} />
+              <div key={index} className="h-[122px] gap-[0px] grid grid-cols-7">
+                {weekDays.map((day, index) => (
+                  <ScheduleBox key={index} user={user} day={day.name} />
                 ))}
               </div>
             ))}
@@ -91,16 +93,6 @@ const AdminSchedule = () => {
 
       <AddEmployeeModal />
     </div>
-  );
-};
-
-const ScheduleBox = () => {
-  return (
-    <button className="col-span-1 border-r-2 border-[rgba(225,225,225,0.18)] last-of-type:border-none bg-[rgba(251,251,251,0.40)] shadow-[0px_4px_11.8px_-5px_rgba(0,0,0,0.18)] flex items-center justify-center">
-      <span className="text-[#cccccc] font-poppins text-center px-6">
-        Click in the box to add new shift
-      </span>
-    </button>
   );
 };
 

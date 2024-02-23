@@ -87,6 +87,8 @@ export const companyResolvers = {
         email,
         telephone,
         paymentPerHour,
+        userImageUrl,
+        userImageId,
       } = args.employeeDto;
 
       const password = generateRandomPassword();
@@ -105,6 +107,8 @@ export const companyResolvers = {
           email,
           username,
           password: hashedPassword,
+          userImageId,
+          userImageUrl,
         },
       });
 

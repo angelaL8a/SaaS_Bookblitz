@@ -2,6 +2,7 @@
 import express from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import fileUpload from "express-fileupload";
 import jwt from "jsonwebtoken";
 import { corsOptions } from "./config/cors.js";
 import { envs } from "./config/env.js";
@@ -14,12 +15,48 @@ import {
   COMPANY_AUTH_ROUTES,
   COMPANY_MEMBER_ROUTES,
 } from "./graphql/config.js";
+import { removeImage, uploadImage } from "./lib/cloudinary.js";
 
 const app = express(); // Create an instance of the Express application.
 
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors(corsOptions));
+app.use(
+  fileUpload({
+    useTempFiles: true,
+    tempFileDir: "/uploads/",
+  })
+);
+
+// Routes
+app.post("/files/upload", async function (req, res) {
+  try {
+    if (!req.files || Object.keys(req.files).length === 0) {
+      return res.status(400).send("No files were uploaded.");
+    }
+
+    // Accessing the file
+    const file = req.files.file;
+
+    const result = await uploadImage(file.tempFilePath);
+
+    res.json(result);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Server Error");
+  }
+});
+
+app.delete("/files/remove", async function (req, res) {
+  const { public_id } = req.query;
+
+  if (!public_id) return res.status(400).json({ msg: "Public Id required" });
+
+  await removeImage(public_id);
+
+  res.json({ msg: "success" });
+});
 
 // Start the server
 app.listen(envs.PORT, () => {

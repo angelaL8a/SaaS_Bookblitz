@@ -33,6 +33,8 @@
 
 * {
   font-family: "Outfit", sans-serif;
+  scrollbar-width: thin;
+  scrollbar-color: #ca9eff4c transparent;
 }
 
 /* Extra styles */
@@ -172,7 +174,7 @@
 }
 
 .button_add_new_user {
-  border-radius: 98px;
+  border-radius: 30px;
   background: linear-gradient(
     180deg,
     #fff 0%,
@@ -185,5 +187,5 @@
 
 .week_days_card {
   background: linear-gradient(180deg, #f2fcfc 0%, #f2fcfc 100%);
-  box-shadow: 3px 2px 8.6px 0px rgba(0, 0, 0, 0.14), -7px -5px 11.3px 0px #fff;
+  box-shadow: 3px 5px 5.9px -1px rgba(0, 0, 0, 0.14), -3px -5px 11.3px 0px #fff;
 }

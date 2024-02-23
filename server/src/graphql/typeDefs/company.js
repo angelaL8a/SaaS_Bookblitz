@@ -50,6 +50,8 @@ export const companyTypeDefs = gql`
     email: EmailAddress!
     telephone: String!
     paymentPerHour: Float!
+    userImageUrl: String
+    userImageId: String
   }
 
   input AddClientDto {

@@ -21,7 +21,8 @@ const Header = () => {
         <Button
           type="button"
           onClick={() => logout()}
-          className="rounded-[8px] h-10 px-10 font-semibold font-poppins"
+          className="rounded-[8px] h-10 px-10 font-semibold font-poppins bg-gradient-to-b from-white from-0% to-[rgba(255,255,255,0.90)] to-100% drop-shadow-[1px_1px_2.1px_rgba(0,0,0,0.14)] text-[#727272]"
+          variant={"unstyled"}
         >
           Log out
         </Button>

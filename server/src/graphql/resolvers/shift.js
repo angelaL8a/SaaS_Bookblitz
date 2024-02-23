@@ -36,7 +36,6 @@ export const shiftResolvers = {
             title,
             description,
             fee,
-            status,
             clientId,
           } = appointment;
 
@@ -50,7 +49,6 @@ export const shiftResolvers = {
               title,
               description,
               fee,
-              status,
               shift: { connect: { id: shift.id } },
               client: { connect: { id: clientId } },
             },

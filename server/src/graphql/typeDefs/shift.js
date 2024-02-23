@@ -18,8 +18,8 @@ export const shiftTypeDefs = gql`
   input AppointmentDto {
     referencialImageUrl: String
     referencialImageId: String
-    startTime: String!
-    endTime: String!
+    startTime: DateTime!
+    endTime: DateTime!
     title: String!
     description: String!
     fee: Float!

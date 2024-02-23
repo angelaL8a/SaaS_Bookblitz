@@ -6,15 +6,18 @@ import { GraphQLClient } from "graphql-request";
  */
 
 // https://vitejs.dev/guide/env-and-mode
-export const client = new GraphQLClient(import.meta.env.VITE_SERVER_URL, {
-  credentials: "include",
-  headers: () => {
-    const token = window.localStorage.getItem("token");
+export const client = new GraphQLClient(
+  `${import.meta.env.VITE_SERVER_URL}/gql`,
+  {
+    credentials: "include",
+    headers: () => {
+      const token = window.localStorage.getItem("token");
 
-    if (!token) return {};
+      if (!token) return {};
 
-    return {
-      Authorization: `Bearer ${token}`,
-    };
-  },
-});
+      return {
+        Authorization: `Bearer ${token}`,
+      };
+    },
+  }
+);
