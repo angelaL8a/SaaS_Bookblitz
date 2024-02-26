@@ -2,6 +2,8 @@ import PropTypes from "prop-types";
 import DatePicker from "../date-picker";
 import CustomLoader from "../custom-loader";
 import ImagePicker from "../image-picker";
+import NumberInput from "./number-input";
+import PaymentType from "./payment-type";
 import { Button } from "../ui/button";
 import {
   Dialog,
@@ -18,14 +20,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-import { cn } from "@/lib/utils";
+import { cn, deletePhoto, pastelColors, uploadPhoto } from "@/lib/utils";
 import { Separator } from "../ui/separator";
 import { useGetCompany, useMutateAddemployee } from "@/hooks/use-company";
 import { useToast } from "../ui/use-toast";
-import { axiosClient } from "@/lib/axios";
 import { useHandleCatchError } from "@/hooks/use-handle-catch-error";
-import NumberInput from "./number-input";
-import PaymentType from "./payment-type";
+import { shuffle } from "lodash";
 
 const AddEmployeeModal = () => {
   const { toast } = useToast();
@@ -71,18 +71,7 @@ const AddEmployeeModal = () => {
     try {
       setIsPending(true);
       if (currentPhoto) {
-        const formDataToSend = new FormData();
-        formDataToSend.append("file", currentPhoto);
-
-        const { data: fileData } = await axiosClient.post(
-          "/files/upload",
-          formDataToSend,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        );
+        const fileData = await uploadPhoto(currentPhoto);
 
         userSecureUrl = fileData.secure_url;
         userPublicId = fileData.public_id;
@@ -95,6 +84,7 @@ const AddEmployeeModal = () => {
           paymentPerHour: parseFloat(employeeData.paymentPerHour),
           userImageUrl: userSecureUrl,
           userImageId: userPublicId,
+          employeeColor: shuffle(pastelColors).pop(),
         },
       });
 
@@ -126,7 +116,7 @@ const AddEmployeeModal = () => {
       }
     } catch (error) {
       if (userPublicId) {
-        await axiosClient.delete(`/files/remove?public_id=${userPublicId}`);
+        await deletePhoto(userPublicId);
       }
 
       handleError({ error });
@@ -138,7 +128,7 @@ const AddEmployeeModal = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <div className="w-[380px] flex justify-center mt-5">
+        <div className="w-[380px] flex justify-center mt-8">
           <button className="button_add_new_user px-4 py-3 font-poppins text-[#979797] text-2xl w-[360px]">
             Add new employee
           </button>

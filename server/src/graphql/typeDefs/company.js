@@ -6,7 +6,10 @@ export const companyTypeDefs = gql`
     name: String!
     url: String!
     role: UserCompanyRole
+
     users: [UserInCompany!]!
+    shifts: [Shift!]!
+
     createdAt: DateTime!
     updatedAt: DateTime!
   }
@@ -34,6 +37,7 @@ export const companyTypeDefs = gql`
     state: String
     zip: String
     address: String
+    employeeColor: String
   }
 
   input AddEmployeeDto {
@@ -52,6 +56,7 @@ export const companyTypeDefs = gql`
     paymentPerHour: Float!
     userImageUrl: String
     userImageId: String
+    employeeColor: String
   }
 
   input AddClientDto {

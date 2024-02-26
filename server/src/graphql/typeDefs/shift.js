@@ -16,6 +16,7 @@ export const shiftTypeDefs = gql`
   }
 
   input AppointmentDto {
+    id: String
     referencialImageUrl: String
     referencialImageId: String
     startTime: DateTime!
@@ -27,10 +28,16 @@ export const shiftTypeDefs = gql`
   }
 
   input ShiftDto {
-    checkInTime: String!
-    checkOutTime: String!
-    date: String!
+    checkInTime: DateTime!
+    checkOutTime: DateTime!
+    date: DateTime!
     employeeId: String!
+    appointments: [AppointmentDto!]!
+  }
+
+  input UpdateShiftDto {
+    checkInTime: DateTime!
+    checkOutTime: DateTime!
     appointments: [AppointmentDto!]!
   }
 
@@ -41,6 +48,11 @@ export const shiftTypeDefs = gql`
 
   type Mutation {
     Shift_CreateShift(shiftDto: ShiftDto!, companyId: String!): Shift!
+    Shift_UpdateShift(
+      shiftId: String!
+      shiftDto: UpdateShiftDto!
+      companyId: String!
+    ): Shift!
     Appointment_CreateComment(commentDto: CommentDto!): CommentOnAppointment!
   }
 `;

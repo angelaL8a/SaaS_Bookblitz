@@ -4,3 +4,7 @@ https://ui.shadcn.com/docs/components/dialog
 https://axios-http.com/docs/intro
 https://cloudinary.com/documentation/node_quickstart
 https://www.npmjs.com/package/express-fileupload
+https://www.radix-ui.com/primitives/docs/components/dialog#abstract-the-overlay-and-the-close-button
+https://react.dev/reference/react/useMemo
+https://react.dev/reference/react/useCallback
+https://ui.shadcn.com/docs/components/context-menu

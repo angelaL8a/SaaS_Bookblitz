@@ -48,6 +48,7 @@ model UserInCompany {
   state          String?
   zip            String?
   address        String?
+  employeeColor  String?
 
   @@unique([userId, companyId])
 }
@@ -57,7 +58,8 @@ model Company {
   name String
   url  String @unique
 
-  users UserInCompany[] @relation("company")
+  users  UserInCompany[] @relation("company")
+  shifts Shift[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -69,6 +71,8 @@ model Shift {
   checkOutTime DateTime
   date         DateTime
 
+  company      Company       @relation(fields: [companyId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  companyId    String
   employee     UserInCompany @relation(fields: [employeeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   employeeId   String
   appointments Appointment[]
@@ -95,8 +99,10 @@ model Appointment {
 
   comments CommentOnAppointment[]
 
-  client   UserInCompany @relation(fields: [clientId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  clientId String
+  client   UserInCompany? @relation(fields: [clientId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  clientId String?
+
+  createdAt DateTime @default(now())
 }
 
 model CommentOnAppointment {

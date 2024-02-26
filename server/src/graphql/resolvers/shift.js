@@ -5,8 +5,40 @@ import {
   UNAUTHENTICATED_CODE,
 } from "../error-codes.js";
 import { db } from "../../db/index.js";
+import { removeImage } from "../../lib/cloudinary.js";
 
 export const shiftResolvers = {
+  Shift: {
+    appointments: async (shift) => {
+      const appointments = await db.appointment.findMany({
+        where: { shiftId: shift.id },
+        orderBy: { createdAt: "asc" },
+      });
+
+      return appointments;
+    },
+
+    employee: async (shift) => {
+      const employee = await db.userInCompany.findUnique({
+        where: { id: shift.employeeId },
+      });
+
+      return employee;
+    },
+  },
+
+  Appointment: {
+    client: async (appointment) => {
+      if (!appointment.clientId) return null;
+
+      const client = await db.userInCompany.findUnique({
+        where: { id: appointment.clientId },
+      });
+
+      return client;
+    },
+  },
+
   Mutation: {
     Shift_CreateShift: async (_, args, context) => {
       if (!context.isAdmin)
@@ -23,6 +55,7 @@ export const shiftResolvers = {
           checkOutTime,
           date,
           employee: { connect: { id: employeeId } },
+          company: { connect: { id: args.companyId } },
         },
       });
 
@@ -37,10 +70,12 @@ export const shiftResolvers = {
             description,
             fee,
             clientId,
+            id,
           } = appointment;
 
           await db.appointment.create({
             data: {
+              id: id ?? undefined,
               referencialImageUrl,
               referencialImageId,
               startTime,
@@ -50,13 +85,95 @@ export const shiftResolvers = {
               description,
               fee,
               shift: { connect: { id: shift.id } },
-              client: { connect: { id: clientId } },
+              client: clientId ? { connect: { id: clientId } } : undefined,
             },
           });
         })
       );
 
       return shift;
+    },
+
+    Shift_UpdateShift: async (_, args, context) => {
+      if (!context.isAdmin)
+        throw new GraphQLError("You must be an admin!", {
+          extensions: { code: FORBIDDEN_ERROR_CODE },
+        });
+
+      const { checkInTime, checkOutTime, appointments } = args.shiftDto;
+
+      const shift = await db.shift.findUnique({
+        where: { id: args.shiftId },
+        include: { appointments: true },
+      });
+      if (!shift)
+        throw new GraphQLError("Shift not found.", {
+          extensions: { code: NOT_FOUND_CODE },
+        });
+
+      // Delete all the appointments and create again with the new appointments data
+      await Promise.all(
+        shift.appointments.map(async (apt) => {
+          const newApt = appointments.find((a) => a.id === apt.id);
+          if (!newApt) await removeImage(apt.referencialImageId);
+
+          await db.appointment.delete({
+            where: { id: apt.id },
+          });
+        })
+      );
+
+      await Promise.all(
+        appointments.map(async (appointment) => {
+          const {
+            referencialImageUrl,
+            referencialImageId,
+            startTime,
+            endTime,
+            title,
+            description,
+            fee,
+            clientId,
+            id,
+          } = appointment;
+
+          const lastApt = shift.appointments.find((a) => a.id === id);
+          if (lastApt) {
+            if (lastApt.referencialImageId !== referencialImageId) {
+              await removeImage(lastApt.referencialImageId);
+            }
+          } else {
+            await removeImage(lastApt.referencialImageId);
+          }
+
+          await db.appointment.create({
+            data: {
+              id: id ?? undefined,
+              referencialImageUrl,
+              referencialImageId,
+              startTime,
+              endTime,
+              date: shift.date,
+              title,
+              description,
+              fee,
+              shift: { connect: { id: shift.id } },
+              client: clientId ? { connect: { id: clientId } } : undefined,
+            },
+          });
+        })
+      );
+
+      // Update the shift info
+      const updatedShift = await db.shift.update({
+        where: { id: args.shiftId },
+        data: {
+          checkInTime,
+          checkOutTime,
+        },
+      });
+
+      return updatedShift;
     },
 
     Appointment_CreateComment: async (_, args, context) => {

@@ -2,6 +2,8 @@ import { gql } from "graphql-tag";
 import {
   DateTimeTypeDefinition,
   DateTimeResolver,
+  DateTimeISOTypeDefinition,
+  DateTimeISOResolver,
   EmailAddressTypeDefinition,
   EmailAddressResolver,
 } from "graphql-scalars";
@@ -34,6 +36,7 @@ const rootTypeDefs = gql`
 
 export const typeDefs = [
   rootTypeDefs,
+  DateTimeISOTypeDefinition,
   DateTimeTypeDefinition,
   EmailAddressTypeDefinition,
   userTypeDefs,
@@ -44,6 +47,7 @@ export const typeDefs = [
 export const resolvers = [
   { DateTime: DateTimeResolver },
   { EmailAddress: EmailAddressResolver },
+  { DateTimeISO: DateTimeISOResolver },
   userResolvers,
   companyResolvers,
   shiftResolvers,

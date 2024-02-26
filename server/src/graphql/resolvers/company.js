@@ -34,6 +34,19 @@ export const companyResolvers = {
 
       return users;
     },
+
+    shifts: async (company, _, context) => {
+      if (!context.isAdmin)
+        throw new GraphQLError("You must be an admin!", {
+          extensions: { code: FORBIDDEN_ERROR_CODE },
+        });
+
+      const shifts = await db.shift.findMany({
+        where: { companyId: company.id },
+      });
+
+      return shifts;
+    },
   },
 
   UserInCompany: {
@@ -89,6 +102,7 @@ export const companyResolvers = {
         paymentPerHour,
         userImageUrl,
         userImageId,
+        employeeColor,
       } = args.employeeDto;
 
       const password = generateRandomPassword();
@@ -131,6 +145,7 @@ export const companyResolvers = {
           address,
           telephone,
           paymentPerHour,
+          employeeColor,
         },
       });
 

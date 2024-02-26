@@ -1,43 +1,23 @@
+import { useGetDays } from "@/store/schedule-store";
+import { CalendarIcon } from "lucide-react";
+
 const CurrentDate = () => {
-  // Get the current date
-  const currentDate = new Date();
-
-  // Get the current day of the week (0 is Sunday, 1 is Monday, ..., 6 is Saturday)
-  const currentDayOfWeek = currentDate.getDay();
-
-  // Calculate the starting day of the week (Monday)
-  const startingDayOfWeek = new Date(currentDate);
-  const mondayOffset = currentDayOfWeek === 0 ? -6 : 1;
-  startingDayOfWeek.setDate(
-    currentDate.getDate() - currentDayOfWeek + mondayOffset
-  );
-
-  // Array to store the days of the week
-  const daysOfWeek = [];
-
-  // Loop through the days of the week (Monday to Sunday)
-  for (let i = 0; i < 7; i++) {
-    const day = new Date(startingDayOfWeek);
-    day.setDate(startingDayOfWeek.getDate() + i);
-    daysOfWeek.push(day);
-  }
-
-  // Format the date as "MMM DD"
-  const formatDate = (date) => {
-    const options = { month: "short", day: "numeric" };
-    return date.toLocaleDateString("en-US", options);
-  };
+  const { daysOfWeek, currentDate } = useGetDays();
 
   // Render the days
   return (
     <div className="w-[380px] flex justify-between items-center">
       <span className="text-[#515151] font-poppins text-[24px]">
-        {formatDate(daysOfWeek[0])}
+        {daysOfWeek[0]?.formattedDay}
         {" - "}
-        {formatDate(daysOfWeek[daysOfWeek.length - 1])}
+        {daysOfWeek[daysOfWeek?.length - 1]?.formattedDay}
       </span>
 
-      <div>{currentDate.getFullYear()}</div>
+      <div className="px-4 py-2 bg-gradient-to-b from-white from-0% via-[rgba(255,255,255,0.00)] via-100% to-[rgba(185,185,185,0.53)] flex items-center gap-2 to-100% rounded-md shadow-[0px_1px_3.3px_0px_rgba(0,0,0,0.25)]">
+        <CalendarIcon className="h-5 w-5 text-muted-foreground" />
+
+        <span className="text-[#333]">{currentDate.getFullYear()}</span>
+      </div>
     </div>
   );
 };
