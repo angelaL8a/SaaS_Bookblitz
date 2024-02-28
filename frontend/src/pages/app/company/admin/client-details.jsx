@@ -1,14 +1,8 @@
-import PageContainer from "@/components/page-container";
-import AddEmployeeModal from "@/components/admin/add-employee-modal";
-import TableContent from "@/components/table/table-content";
+import AddClientModal from "@/components/admin/add-client-modal";
 import CustomImage from "@/components/custom-image";
-import Rating from "@/components/table/rating";
+import PageContainer from "@/components/page-container";
 import Table from "@/components/table/table";
-import { useGetCompany, useMutateDeleteEmployee } from "@/hooks/use-company";
-import { getTableDate } from "@/lib/utils";
-import { Trash2Icon } from "lucide-react";
-import { EyeIcon } from "lucide-react";
-import { useHandleCatchError } from "@/hooks/use-handle-catch-error";
+import TableContent from "@/components/table/table-content";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -20,33 +14,29 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { useGetCompany, useMutateDeleteClient } from "@/hooks/use-company";
+import { useHandleCatchError } from "@/hooks/use-handle-catch-error";
+import { getTableDate } from "@/lib/utils";
+import { Trash2Icon } from "lucide-react";
+import { EyeIcon } from "lucide-react";
 
-const employeeDetailsColumns = [
-  "Name",
-  "Contact",
-  "Phone",
-  "Position",
-  "Gender",
-  "Address",
-  "Average Rating",
-  "More",
-];
+const clientDetailsColumns = ["Name", "Contact", "Phone", "Gender", "More"];
 
-const EmployeeDetails = () => {
+const ClientDetails = () => {
   const { handleError } = useHandleCatchError();
 
   const { data, refetch } = useGetCompany();
-  const { mutateAsync: mutateDeleteEmployee } = useMutateDeleteEmployee();
+  const { mutateAsync: mutateDeleteClient } = useMutateDeleteClient();
 
-  const employees = data?.users.filter((u) => u.role === "Employee");
+  const clients = data?.users.filter((u) => u.role === "Client");
 
-  const deleteEmployee = async (id) => {
+  const deleteClient = async (id) => {
     if (!data) return;
 
     try {
-      const response = await mutateDeleteEmployee({
+      const response = await mutateDeleteClient({
         companyId: data.id,
-        employeeId: id,
+        clientId: id,
       });
 
       if (response) {
@@ -62,30 +52,34 @@ const EmployeeDetails = () => {
   return (
     <PageContainer>
       <h1 className="text-5xl text-[#828282] font-poppins text-center font-[200]">
-        Employee Directory
+        Client Directory
       </h1>
 
-      <Table columns={employeeDetailsColumns}>
-        {employees.map((employee, index) => (
+      <Table
+        columns={clientDetailsColumns}
+        headerClassName="[background:linear-gradient(180deg,#D3FFFC_0%,#A0FFFF_100%)]"
+        containerClassName="max-w-[900px] mx-auto"
+      >
+        {clients.map((client, index) => (
           <TableContent
             key={index}
-            columns={employeeDetailsColumns}
+            columns={clientDetailsColumns}
             columnsData={[
               {
                 name: "Name",
                 element: (
                   <div className="flex items-center gap-2">
                     <CustomImage
-                      src={employee.user.userImageUrl}
+                      src={client.user.userImageUrl}
                       className="w-10 h-10 rounded-full"
                     />
 
                     <div className="flex flex-col flex-1 min-w-0">
                       <span className="text-[#25213B] text-lg font-medium truncate">
-                        {employee.user.name}
+                        {client.user.name}
                       </span>
                       <span className="text-[#6E6893] -mt-1.5 text-sm truncate">
-                        {getTableDate(employee.birthDate)}
+                        {getTableDate(client.birthDate)}
                       </span>
                     </div>
                   </div>
@@ -95,7 +89,7 @@ const EmployeeDetails = () => {
                 name: "Contact",
                 element: (
                   <div className="flex items-center justify-center text-[#6E6893]">
-                    <span className="truncate">{employee.email}</span>
+                    <span className="truncate">{client.email}</span>
                   </div>
                 ),
               },
@@ -103,19 +97,7 @@ const EmployeeDetails = () => {
                 name: "Phone",
                 element: (
                   <div className="flex items-center justify-center text-[#6E6893]">
-                    {employee.telephone}
-                  </div>
-                ),
-              },
-              {
-                name: "Position",
-                element: (
-                  <div className="flex items-center justify-center">
-                    <div className="flex items-center gap-2 px-4 py-1 rounded-full bg-[#F1BEF3]">
-                      <div className="h-2 w-2 bg-[#8E8E8E] rounded-full"></div>
-
-                      {employee.position}
-                    </div>
+                    {client.telephone}
                   </div>
                 ),
               },
@@ -123,26 +105,7 @@ const EmployeeDetails = () => {
                 name: "Gender",
                 element: (
                   <div className="flex items-start justify-center text-[#ACACAC] uppercase">
-                    {employee.gender}
-                  </div>
-                ),
-              },
-              {
-                name: "Address",
-                element: (
-                  <div className="flex items-start justify-center text-[#6E6893]">
-                    <span className="truncate">{employee.address}</span>
-                  </div>
-                ),
-              },
-              {
-                name: "Average Rating",
-                element: (
-                  <div className="flex items-start justify-center">
-                    <Rating
-                      color={employee.employeeColor}
-                      value={Math.floor(Math.random() * (5 - 1 + 1)) + 1}
-                    />
+                    {client.gender}
                   </div>
                 ),
               },
@@ -171,18 +134,18 @@ const EmployeeDetails = () => {
                           </AlertDialogTitle>
                           <AlertDialogDescription>
                             This action cannot be undone. This will permanently
-                            delete the employee and all the related appointments
-                            and shifts from our servers.
+                            delete the client and all the related appointments
+                            from our servers.
                           </AlertDialogDescription>
                         </AlertDialogHeader>
 
                         <AlertDialogFooter>
                           <AlertDialogCancel>Cancel</AlertDialogCancel>
                           <AlertDialogAction
-                            onClick={() => deleteEmployee(employee.id)}
+                            onClick={() => deleteClient(client.id)}
                             className="text-red-500"
                           >
-                            Delete employee
+                            Delete client
                           </AlertDialogAction>
                         </AlertDialogFooter>
                       </AlertDialogContent>
@@ -196,10 +159,10 @@ const EmployeeDetails = () => {
       </Table>
 
       <div className="flex justify-center pt-4 pb-12">
-        <AddEmployeeModal />
+        <AddClientModal />
       </div>
     </PageContainer>
   );
 };
 
-export default EmployeeDetails;
+export default ClientDetails;

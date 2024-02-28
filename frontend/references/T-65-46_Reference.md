@@ -8,3 +8,4 @@ https://www.radix-ui.com/primitives/docs/components/dialog#abstract-the-overlay-
 https://react.dev/reference/react/useMemo
 https://react.dev/reference/react/useCallback
 https://ui.shadcn.com/docs/components/context-menu
+https://heroicons.com/

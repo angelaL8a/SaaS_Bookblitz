@@ -177,6 +177,35 @@ export const convertToDateTime = (obj) => {
   return formattedDateTime;
 };
 
+export const getTableDate = (inputDate) => {
+  // Convert the date string to a date object
+  const date = new Date(inputDate);
+
+  // Define month names and days in an array
+  const months = [
+    "JAN",
+    "FEB",
+    "MAR",
+    "APR",
+    "MAY",
+    "JUN",
+    "JUL",
+    "AUG",
+    "SEP",
+    "OCT",
+    "NOV",
+    "DEC",
+  ];
+
+  // Get date components
+  const day = date.getUTCDate().toString().padStart(2, "0");
+  const month = months[date.getUTCMonth()];
+  const year = date.getUTCFullYear().toString();
+
+  // Format the date in the desired format
+  return `${day}/${month}/${year}`;
+};
+
 export const uploadPhoto = async (currentPhoto) => {
   const formDataToSend = new FormData();
   formDataToSend.append("file", currentPhoto);

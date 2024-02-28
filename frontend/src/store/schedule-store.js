@@ -1,8 +1,8 @@
 import { create } from "zustand";
 import { createId } from "@paralleldrive/cuid2";
 import { useEffect } from "react";
-import { useMemo } from "react";
 import { useCallback } from "react";
+import { useState } from "react";
 
 export const defaultTime = {
   hour: "hh",
@@ -56,8 +56,17 @@ export const useGetScheduleStore = create()((set) => ({
 export const useGetDays = () => {
   const { daysOfWeek, setDaysOfWeek } = useGetScheduleStore();
 
-  // Get the current date in UTC
-  const currentDate = useMemo(() => new Date(new Date().toUTCString()), []);
+  // State to keep track of the current week's start date
+  const [currentWeekStartDate, setCurrentWeekStartDate] = useState(() => {
+    const today = new Date();
+    const currentDayOfWeek = today.getUTCDay();
+    const mondayOffset = currentDayOfWeek === 0 ? -6 : 1;
+    const startingDayOfWeek = new Date(today);
+    startingDayOfWeek.setUTCDate(
+      today.getUTCDate() - currentDayOfWeek + mondayOffset
+    );
+    return startingDayOfWeek;
+  });
 
   // Format the date as "MMM DD" in UTC
   const formatDate = useCallback((date) => {
@@ -68,21 +77,13 @@ export const useGetDays = () => {
   }, []);
 
   const getDays = useCallback(() => {
-    // Get the current day of the week (0 is Sunday, 1 is Monday, ..., 6 is Saturday)
-    const currentDayOfWeek = currentDate.getUTCDay();
-
-    // Calculate the starting day of the week (Monday)
-    const startingDayOfWeek = new Date(currentDate);
-    const mondayOffset = currentDayOfWeek === 0 ? -6 : 1;
-    startingDayOfWeek.setUTCDate(
-      currentDate.getUTCDate() - currentDayOfWeek + mondayOffset
-    );
+    // Initialize the starting day of the week from currentWeekStartDate
+    let startingDayOfWeek = new Date(currentWeekStartDate);
 
     // Loop through the days of the week (Monday to Sunday)
     let days = [];
     for (let i = 0; i < 7; i++) {
       const day = new Date(startingDayOfWeek);
-
       day.setUTCDate(startingDayOfWeek.getUTCDate() + i);
       days.push({
         formattedDay: formatDate(day),
@@ -101,11 +102,23 @@ export const useGetDays = () => {
     }
 
     return days;
-  }, [currentDate, formatDate]);
+  }, [currentWeekStartDate, formatDate]);
+
+  const nextWeek = () => {
+    const nextWeekStartDate = new Date(currentWeekStartDate);
+    nextWeekStartDate.setUTCDate(nextWeekStartDate.getUTCDate() + 7);
+    setCurrentWeekStartDate(nextWeekStartDate);
+  };
+
+  const prevWeek = () => {
+    const prevWeekStartDate = new Date(currentWeekStartDate);
+    prevWeekStartDate.setUTCDate(prevWeekStartDate.getUTCDate() - 7);
+    setCurrentWeekStartDate(prevWeekStartDate);
+  };
 
   useEffect(() => {
     setDaysOfWeek(getDays());
   }, [setDaysOfWeek, getDays]);
 
-  return { formatDate, daysOfWeek, currentDate };
+  return { formatDate, daysOfWeek, nextWeek, prevWeek, currentWeekStartDate };
 };

@@ -142,8 +142,6 @@ export const shiftResolvers = {
             if (lastApt.referencialImageId !== referencialImageId) {
               await removeImage(lastApt.referencialImageId);
             }
-          } else {
-            await removeImage(lastApt.referencialImageId);
           }
 
           await db.appointment.create({
@@ -174,6 +172,36 @@ export const shiftResolvers = {
       });
 
       return updatedShift;
+    },
+
+    Shift_DeleteShift: async (_, args, context) => {
+      if (!context.isAdmin)
+        throw new GraphQLError("You must be an admin!", {
+          extensions: { code: FORBIDDEN_ERROR_CODE },
+        });
+
+      const shift = await db.shift.findUnique({
+        where: { id: args.shiftId },
+        include: { appointments: true },
+      });
+      if (!shift)
+        throw new GraphQLError("Shift not found.", {
+          extensions: { code: NOT_FOUND_CODE },
+        });
+
+      const deletedShift = await db.shift.delete({
+        where: { id: args.shiftId },
+      });
+
+      await Promise.all(
+        shift.appointments.map(async (apt) => {
+          if (apt.referencialImageId) {
+            await removeImage(apt.referencialImageId);
+          }
+        })
+      );
+
+      return deletedShift;
     },
 
     Appointment_CreateComment: async (_, args, context) => {

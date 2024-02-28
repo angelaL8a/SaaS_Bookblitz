@@ -53,6 +53,7 @@ export const shiftTypeDefs = gql`
       shiftDto: UpdateShiftDto!
       companyId: String!
     ): Shift!
+    Shift_DeleteShift(shiftId: String!, companyId: String!): Shift!
     Appointment_CreateComment(commentDto: CommentDto!): CommentOnAppointment!
   }
 `;

@@ -10,7 +10,7 @@ const NavigationBar = () => {
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       transition={{ duration: 0.3, ease: "easeInOut" }}
-      className="flex gap-10 items-center max-w-[1200px] mx-auto mt-1"
+      className="flex gap-10 items-center mt-2 max-w-[1200px] mx-auto"
     >
       <NavigationItem
         title="Schedule"

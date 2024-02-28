@@ -1,9 +1,12 @@
-import PropTypes from "prop-types";
 import DatePicker from "../date-picker";
 import CustomLoader from "../custom-loader";
 import ImagePicker from "../image-picker";
 import NumberInput from "./number-input";
 import PaymentType from "./payment-type";
+import GridContainer from "./form/grid-container";
+import PurpleInput from "./form/purple-input";
+import WhiteInput from "./form/white-input";
+import LavandaInput from "./form/lavanda-input";
 import { Button } from "../ui/button";
 import {
   Dialog,
@@ -11,7 +14,6 @@ import {
   DialogContent,
   DialogTrigger,
 } from "../ui/dialog";
-import { Input } from "../ui/input";
 import { useState } from "react";
 import {
   Select,
@@ -159,7 +161,7 @@ const AddEmployeeModal = () => {
             addEmployee();
           }}
         >
-          <h1 className="text-center text-3xl font-poppins">Add employee</h1>
+          <h1 className="text-3xl text-center font-poppins">Add employee</h1>
 
           <div className="mt-8">
             <GridContainer className="grid-cols-3 grid-rows-2">
@@ -171,7 +173,7 @@ const AddEmployeeModal = () => {
                 }}
               />
 
-              <div className="row-span-2 justify-between flex flex-col">
+              <div className="flex flex-col justify-between row-span-2">
                 <PurpleInput
                   label="First name(s)"
                   placeholder="Romina Ariel"
@@ -199,7 +201,7 @@ const AddEmployeeModal = () => {
                 </div>
               </div>
 
-              <div className="row-span-2 justify-between flex flex-col">
+              <div className="flex flex-col justify-between row-span-2">
                 <PurpleInput
                   label="Last Name"
                   placeholder="Jacobs Jenkins"
@@ -220,7 +222,7 @@ const AddEmployeeModal = () => {
                         gender: value,
                       });
                     }}
-                    defaultValue={employeeData.gender}
+                    value={employeeData.gender}
                     name="gender"
                   >
                     <SelectTrigger
@@ -383,7 +385,7 @@ const AddEmployeeModal = () => {
 
               <div></div>
 
-              <div className="w-full flex justify-end items-end">
+              <div className="flex items-end justify-end w-full">
                 <Button
                   variant="unstyled"
                   className="shadow-[0px_4px_4.3px_-3px_rgba(128,37,244,0.67)] rounded-full bg-gradient-to-b from-[#DBCAFF] from-0% to-[#AD98FF] to-100% text-[rgba(255,255,255,0.78)] -mr-5"
@@ -408,7 +410,7 @@ const AddEmployeeModal = () => {
                   {isPending ? (
                     <CustomLoader
                       containerClassName="mr-2 mt-0"
-                      className="h-5 w-5"
+                      className="w-5 h-5"
                     />
                   ) : null}
                   Add employee
@@ -420,120 +422,6 @@ const AddEmployeeModal = () => {
       </DialogContent>
     </Dialog>
   );
-};
-
-const GridContainer = ({ children, className }) => {
-  return (
-    <div className={cn("grid grid-cols-2 gap-5", className)}>{children}</div>
-  );
-};
-GridContainer.propTypes = {
-  children: PropTypes.node,
-  className: PropTypes.string,
-};
-
-const PurpleInput = ({ label, placeholder, name, value, onChange }) => {
-  return (
-    <div className="rounded-md bg-gradient-to-b from-[rgba(239,229,255,0.50)] from-0% to-[rgba(229,214,255,0.50)] to-100% px-2 py-1.5 shadow-[0px_2px_5px_0px_rgba(0,0,0,0.10)]">
-      <label className="text-xs text-[#6D6D6D] block font-poppins">
-        {label}
-      </label>
-
-      <Input
-        placeholder={placeholder}
-        className="border-none p-0 shadow-none h-auto text-[#6967A6] placeholder:text-[rgba(174,191,192,0.44)] text-lg"
-        name={name}
-        value={value}
-        onChange={onChange}
-      />
-    </div>
-  );
-};
-PurpleInput.propTypes = {
-  label: PropTypes.string.isRequired,
-  placeholder: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
-};
-
-const WhiteInput = ({
-  label,
-  placeholder,
-  disabled,
-  autocompleted,
-  value,
-  onChange,
-  name,
-}) => {
-  return (
-    <div>
-      <label className="text-[#747474] text-[15px] font-medium font-poppins">
-        {label}
-      </label>
-
-      <Input
-        placeholder={placeholder}
-        className="px-3 py-3 h-auto font-poppins bg-white shadow-[0px_4px_3.3px_0px_rgba(0,0,0,0.03)] rounded-md text-[#6967A6] placeholder:text-[#BCBEC0] text-lg border-none"
-        disabled={disabled}
-        value={value}
-        onChange={onChange}
-        name={name}
-      />
-
-      {autocompleted ? (
-        <span className="text-[11px] pl-1 text-muted-foreground/50">
-          This field will be autocompleted by default.
-        </span>
-      ) : null}
-    </div>
-  );
-};
-WhiteInput.propTypes = {
-  label: PropTypes.string.isRequired,
-  placeholder: PropTypes.string.isRequired,
-  disabled: PropTypes.bool,
-  autocompleted: PropTypes.bool,
-  name: PropTypes.string,
-  value: PropTypes.string,
-  onChange: PropTypes.func,
-};
-
-const LavandaInput = ({
-  label,
-  placeholder,
-  variant = "top",
-  value,
-  onChange,
-  name,
-}) => {
-  return (
-    <div>
-      <label className="text-[#747474] text-[13px] font-medium font-poppins">
-        {label}
-      </label>
-
-      <Input
-        placeholder={placeholder}
-        className={cn(
-          "px-3 py-3 h-auto font-poppins bg-[rgba(226,222,255,0.58)] text-[#6967A6] placeholder:text-[#BCBEC0] text-lg border border-[rgba(159,63,255,0.18)]",
-          variant === "top" ? "rounded-t-lg" : null,
-          variant === "bottom" ? "rounded-b-lg" : null
-        )}
-        value={value}
-        onChange={onChange}
-        name={name}
-      />
-    </div>
-  );
-};
-LavandaInput.propTypes = {
-  label: PropTypes.string.isRequired,
-  placeholder: PropTypes.string.isRequired,
-  variant: PropTypes.oneOf(["top", "bottom"]),
-  name: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
 };
 
 export default AddEmployeeModal;

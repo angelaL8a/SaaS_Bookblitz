@@ -26,6 +26,13 @@ export const GetCompany = gql`
       createdAt
       users {
         ...UserDetails
+        birthDate
+        email
+        telephone
+        position
+        gender
+        address
+        paymentPerHour
       }
       shifts {
         id
@@ -55,4 +62,19 @@ export const GetCompany = gql`
   }
 
   ${FRAGMENT_USER}
+`;
+
+export const Company_GetPayroll = gql`
+  query Company_GetPayroll($companyId: String!, $filter: PayrollFilterInput!) {
+    Company_GetPayroll(companyId: $companyId) {
+      employee {
+        id
+      }
+      hoursAndPayment(filter: $filter) {
+        grossPay
+        hoursWorked
+        paymentPerHour
+      }
+    }
+  }
 `;

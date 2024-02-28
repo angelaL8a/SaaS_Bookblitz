@@ -30,6 +30,7 @@ export const companyTypeDefs = gql`
     shifts: [Shift!]!
     comments: [CommentOnAppointment!]!
 
+    email: EmailAddress
     startingDate: DateTime
     position: String
     paymentPerHour: Float
@@ -66,10 +67,33 @@ export const companyTypeDefs = gql`
     gender: String!
     email: EmailAddress!
     telephone: String!
+    userImageUrl: String
+    userImageId: String
+  }
+
+  type HoursAndPayment {
+    hoursWorked: Int!
+    grossPay: Float!
+    paymentPerHour: Float!
+  }
+
+  type PayrollEmployee {
+    employee: UserInCompany!
+    hoursAndPayment(filter: PayrollFilterInput!): HoursAndPayment!
+  }
+
+  input PayrollFilterInput {
+    fromMonth: Int!
+    toMonth: Int!
+    startDay: Int!
+    endDay: Int!
+    fromYear: Int!
+    toYear: Int!
   }
 
   type Query {
     GetCompany(companyUrl: String!): Company!
+    Company_GetPayroll(companyId: String!): [PayrollEmployee!]!
   }
 
   type Mutation {
@@ -81,5 +105,11 @@ export const companyTypeDefs = gql`
       clientDto: AddClientDto!
       companyId: String!
     ): UserInCompany!
+
+    Company_DeleteEmployee(
+      companyId: String!
+      employeeId: String!
+    ): UserInCompany!
+    Company_DeleteClient(companyId: String!, clientId: String!): UserInCompany!
   }
 `;

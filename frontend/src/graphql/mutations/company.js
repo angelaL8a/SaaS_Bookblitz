@@ -19,6 +19,18 @@ export const Company_AddEmployee = gql`
   }
 `;
 
+export const Company_AddClient = gql`
+  mutation Company_AddClient($clientDto: AddClientDto!, $companyId: String!) {
+    Company_AddClient(clientDto: $clientDto, companyId: $companyId) {
+      id
+      address
+      role
+      telephone
+      birthDate
+    }
+  }
+`;
+
 export const Shift_CreateShift = gql`
   mutation Shift_CreateShift($shiftDto: ShiftDto!, $companyId: String!) {
     Shift_CreateShift(shiftDto: $shiftDto, companyId: $companyId) {
@@ -65,6 +77,30 @@ export const Shift_UpdateShift = gql`
           username
         }
       }
+    }
+  }
+`;
+
+export const Shift_DeleteShift = gql`
+  mutation Shift_DeleteShift($shiftId: String!, $companyId: String!) {
+    Shift_DeleteShift(shiftId: $shiftId, companyId: $companyId) {
+      id
+    }
+  }
+`;
+
+export const Company_DeleteEmployee = gql`
+  mutation Company_DeleteEmployee($companyId: String!, $employeeId: String!) {
+    Company_DeleteEmployee(companyId: $companyId, employeeId: $employeeId) {
+      id
+    }
+  }
+`;
+
+export const Company_DeleteClient = gql`
+  mutation Company_DeleteClient($companyId: String!, $clientId: String!) {
+    Company_DeleteClient(companyId: $companyId, clientId: $clientId) {
+      id
     }
   }
 `;

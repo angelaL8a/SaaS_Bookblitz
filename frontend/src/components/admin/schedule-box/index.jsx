@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import CustomImage from "@/components/custom-image";
 import NewShiftModal from "./new-shift-modal";
-import { useGetCompany } from "@/hooks/use-company";
+import { useGetCompany, useMutateDeleteShift } from "@/hooks/use-company";
 import {
   cn,
   convertTime,
@@ -20,6 +20,18 @@ import { shuffle } from "lodash";
 import { TrashIcon } from "lucide-react";
 import { PencilIcon } from "lucide-react";
 import { useState } from "react";
+import { useHandleCatchError } from "@/hooks/use-handle-catch-error";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { useToast } from "@/components/ui/use-toast";
 
 const ScheduleBox = ({ user, day }) => {
   const { data: company } = useGetCompany();
@@ -69,7 +81,39 @@ ScheduleBox.propTypes = {
 const Shift = ({ shift, user, day }) => {
   const dateInfo = extractDateInfo(shift.date);
 
+  const { handleError } = useHandleCatchError();
+  const { toast } = useToast();
+
+  const { data: company, refetch } = useGetCompany();
+  const { mutateAsync: mutateDeleteShift } = useMutateDeleteShift();
+
   const [editModal, setEditModal] = useState(false);
+  const [deleteModal, setDeleteModal] = useState(false);
+
+  const deleteShift = async () => {
+    if (!company) return;
+
+    try {
+      const data = await mutateDeleteShift({
+        companyId: company.id,
+        shiftId: shift.id,
+      });
+
+      if (data) {
+        refetch();
+
+        toast({
+          description: "Shift deleted successfully.",
+        });
+
+        return;
+      }
+    } catch (error) {
+      handleError({
+        error,
+      });
+    }
+  };
 
   return (
     <>
@@ -154,7 +198,7 @@ const Shift = ({ shift, user, day }) => {
                           <div className="flex items-center gap-2">
                             <CustomImage
                               src={apt.client?.user?.userImageUrl}
-                              className="w-8 h-8"
+                              className="w-8 h-8 rounded-full"
                             />
 
                             <div className="flex flex-col items-start flex-1 font-poppins">
@@ -196,12 +240,38 @@ const Shift = ({ shift, user, day }) => {
 
           <ContextMenuSeparator />
 
-          <ContextMenuItem className="text-red-400">
+          <ContextMenuItem
+            onClick={() => setDeleteModal(true)}
+            className="text-red-400"
+          >
             <TrashIcon className="w-4 h-4 mr-2" />
             Delete shift
           </ContextMenuItem>
         </ContextMenuContent>
       </ContextMenu>
+
+      <AlertDialog open={deleteModal} onOpenChange={setDeleteModal}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This action cannot be undone. This will permanently delete this
+              shift and remove the data from our servers.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={() => {
+                deleteShift();
+              }}
+              className="text-red-500"
+            >
+              Delete shift
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
 
       <NewShiftModal
         day={day}
