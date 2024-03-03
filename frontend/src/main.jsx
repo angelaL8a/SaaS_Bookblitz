@@ -24,6 +24,7 @@ import CompanyLayout from "./layouts/CompanyLayout";
 import EmployeeDetails from "./pages/app/company/admin/employee-details";
 import ClientDetails from "./pages/app/company/admin/client-details";
 import PayrollSummary from "./pages/app/company/admin/payroll-summary";
+import HomePage from "./pages/app/home-page";
 
 // Define the router configuration
 const router = createBrowserRouter([
@@ -32,24 +33,19 @@ const router = createBrowserRouter([
     element: <RootLayout />,
     children: [
       {
-        path: "/",
+        path: "/auth",
         element: <AuthLayout />,
         children: [
+          { path: "login", element: <LoginPage /> },
           {
-            path: "welcome",
-            element: <WelcomePage />,
-          },
-          {
-            path: "auth",
-            children: [
-              { path: "login", element: <LoginPage /> },
-              {
-                path: "register",
-                element: <RegisterPage />,
-              },
-            ],
+            path: "register",
+            element: <RegisterPage />,
           },
         ],
+      },
+      {
+        path: "/",
+        element: <HomePage />,
       },
       {
         path: "/app/:companyUrl",
@@ -77,6 +73,10 @@ const router = createBrowserRouter([
             element: <div>App employee</div>,
           },
         ],
+      },
+      {
+        path: "welcome",
+        element: <WelcomePage />,
       },
       {
         path: "*",
