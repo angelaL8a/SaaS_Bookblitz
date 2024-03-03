@@ -62,10 +62,10 @@ export const useMutateLoginUser = () => {
 };
 
 export const useAuth = () => {
-  const { isLoading, data } = useQuery({
+  const { isPending, data, refetch } = useQuery({
     queryKey: ["user"],
     queryFn: () => account(),
   });
 
-  return { isLoading, data };
+  return { isLoading: isPending, data, refetch };
 };

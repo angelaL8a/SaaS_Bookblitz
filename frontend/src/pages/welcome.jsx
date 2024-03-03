@@ -4,6 +4,8 @@ import employeeGif from "/gifs/employee.gif";
 import { Link } from "react-router-dom";
 import { cn } from "../lib/utils";
 import { Button } from "../components/ui/button";
+import { useAuth } from "@/hooks/use-auth";
+import { Navigate } from "react-router-dom";
 
 const dataWelcome = [
   {
@@ -27,8 +29,14 @@ const dataWelcome = [
 ];
 
 const WelcomePage = () => {
+  const { data } = useAuth();
+
+  if (data) {
+    return <Navigate to="/" replace />;
+  }
+
   return (
-    <div className="bg-gradient-to-br min-h-screen from-purple-200 via-blue-200 to-teal-100">
+    <div className="min-h-screen bg-gradient-to-br from-purple-200 via-blue-200 to-teal-100">
       <h1 className="welcome_text text-[60px] md:text-[90px] lg:text-[100px] text-center font-[800] pt-10 lg:pt-20">
         Welcome!
       </h1>
@@ -46,7 +54,7 @@ const WelcomePage = () => {
               <img
                 src={item.img}
                 alt={item.title}
-                className="w-full h-full object-cover"
+                className="object-cover w-full h-full"
               />
             </div>
 
