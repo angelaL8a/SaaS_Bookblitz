@@ -5,6 +5,8 @@ import { motion } from "framer-motion";
 const NavigationBar = () => {
   const { data } = useGetCompany();
 
+  if (!data) return;
+
   return (
     <motion.div
       initial={{ opacity: 0 }}

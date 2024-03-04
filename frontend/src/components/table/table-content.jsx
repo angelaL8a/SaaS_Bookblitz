@@ -6,7 +6,7 @@ const TableContent = ({ columns, columnsData }) => {
   return (
     <div
       className={cn(
-        "items-center w-full h-full px-2 py-4 border-b last-of-type:border-none gap-2"
+        "items-center w-full h-full px-2 py-8 border-b last-of-type:border-none gap-2"
       )}
       style={{
         display: "grid",

@@ -14,12 +14,15 @@ import {
 import { useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import { useNavigate } from "react-router-dom";
+import { useQueryClient } from "@tanstack/react-query";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
 
   const { isPending, mutateAsync } = useMutateRegisterUser();
   const { toast } = useToast();
+
+  const queryClient = useQueryClient();
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -57,7 +60,14 @@ const RegisterPage = () => {
         setCompanyName("");
         setCompanyUrl("");
 
-        navigate(`/app/${"companyName"}/admin`);
+        // Set the jwt token in local storage
+        localStorage.setItem("token", data);
+
+        // Clear the cache
+        await queryClient.clear();
+
+        // Redirect the user
+        navigate(`/`);
       }
     } catch (error) {
       // Handle errors and display error messages using toast notifications
@@ -70,8 +80,8 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="background_color_register_page min-h-screen">
-      <div className="background_img_register_page min-h-screen flex items-center h-full w-full justify-center p-5">
+    <div className="min-h-screen background_color_register_page">
+      <div className="flex items-center justify-center w-full h-full min-h-screen p-5 background_img_register_page">
         <div className="p-6 lg:py-8 lg:px-10 rounded-[50px] w-[768px] register_card_bg">
           <h1 className="register_button text-[40px] lg:text-[80px] font-semibold text-center">
             Register
@@ -86,8 +96,8 @@ const RegisterPage = () => {
             className="mt-5 font-spline flex flex-col gap-[20px]"
           >
             {/* Two cols (first name - last name)*/}
-            <div className="flex flex-col lg:flex-row items-center gap-5">
-              <div className="flex items-center gap-4 register_input_name px-5 py-3 w-full lg:w-1/2">
+            <div className="flex flex-col items-center gap-5 lg:flex-row">
+              <div className="flex items-center w-full gap-4 px-5 py-3 register_input_name lg:w-1/2">
                 <UserIcon
                   className="h-[35px] w-[35px] text-[#A585FF]"
                   strokeWidth={1.5}
@@ -101,7 +111,7 @@ const RegisterPage = () => {
                 />
               </div>
 
-              <div className="flex items-center gap-4 register_input_name px-5 py-3 w-full lg:w-1/2">
+              <div className="flex items-center w-full gap-4 px-5 py-3 register_input_name lg:w-1/2">
                 <UserIcon
                   className="h-[35px] w-[35px] text-[#A585FF]"
                   strokeWidth={1.5}
@@ -179,7 +189,7 @@ const RegisterPage = () => {
               }
             >
               {isPending ? (
-                <Loader2Icon className="animate-spin h-5 w-5 mr-2" />
+                <Loader2Icon className="w-5 h-5 mr-2 animate-spin" />
               ) : null}
               Register
             </Button>

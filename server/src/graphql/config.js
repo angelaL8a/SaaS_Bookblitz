@@ -12,4 +12,7 @@ export const COMPANY_AUTH_ROUTES = [
 ];
 
 // Routes for a member of the company
-export const COMPANY_MEMBER_ROUTES = ["GetCompany"];
+export const COMPANY_MEMBER_ROUTES = [
+  "GetCompany",
+  "Company_GetEmployeeCompany",
+];

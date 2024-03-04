@@ -32,8 +32,49 @@ export const GetCompany = gql`
         position
         gender
         address
+        city
+        state
+        zip
         paymentPerHour
       }
+      shifts {
+        id
+        checkInTime
+        checkOutTime
+        date
+        employee {
+          ...UserDetails
+        }
+        appointments {
+          id
+          title
+          description
+          referencialImageUrl
+          referencialImageId
+          fee
+          status
+          startTime
+          endTime
+          date
+          client {
+            ...UserDetails
+          }
+        }
+      }
+    }
+  }
+
+  ${FRAGMENT_USER}
+`;
+
+export const Company_GetEmployeeCompany = gql`
+  query Company_GetEmployeeCompany($companyUrl: String!) {
+    Company_GetEmployeeCompany(companyUrl: $companyUrl) {
+      id
+      name
+      url
+      role
+      createdAt
       shifts {
         id
         checkInTime
@@ -74,6 +115,7 @@ export const Company_GetPayroll = gql`
         grossPay
         hoursWorked
         paymentPerHour
+        avgHours
       }
     }
   }

@@ -5,6 +5,7 @@ import { FORBIDDEN_ERROR_CODE, NOT_FOUND_CODE } from "../error-codes.js";
 import { saltRounds } from "../../config/saltRounds.js";
 import { generateRandomPassword } from "../../utils/generate-random-password.js";
 import { generateRandomUsername } from "../../utils/generate-random-username.js";
+import { sendEmail } from "../../lib/nodemailer.js";
 
 export const companyResolvers = {
   Company: {
@@ -36,16 +37,28 @@ export const companyResolvers = {
     },
 
     shifts: async (company, _, context) => {
-      if (!context.isAdmin)
-        throw new GraphQLError("You must be an admin!", {
-          extensions: { code: FORBIDDEN_ERROR_CODE },
+      if (context.isAdmin) {
+        const shifts = await db.shift.findMany({
+          where: { companyId: company.id },
         });
 
-      const shifts = await db.shift.findMany({
-        where: { companyId: company.id },
-      });
+        return shifts;
+      } else if (context.isCompanyMember) {
+        const employee = await db.userInCompany.findUnique({
+          where: {
+            userId_companyId: {
+              userId: context?.user.id,
+              companyId: company.id,
+            },
+          },
+        });
 
-      return shifts;
+        const shifts = await db.shift.findMany({
+          where: { companyId: company.id, employeeId: employee.id },
+        });
+
+        return shifts;
+      }
     },
   },
 
@@ -102,8 +115,12 @@ export const companyResolvers = {
         totalHours += checkOutTime - checkInTime;
       });
 
+      const avgHours =
+        filteredShifts.length === 0 ? 0 : totalHours / filteredShifts.length;
+
       return {
         hoursWorked: totalHours,
+        avgHours: avgHours,
         grossPay: totalHours * payrollEmployee.employee.paymentPerHour,
         paymentPerHour: payrollEmployee.employee.paymentPerHour,
       };
@@ -147,6 +164,24 @@ export const companyResolvers = {
           employee,
         };
       });
+    },
+
+    Company_GetEmployeeCompany: async (_, args, context) => {
+      if (!context.isCompanyMember)
+        throw new GraphQLError("You must be a member of the company!", {
+          extensions: { code: FORBIDDEN_ERROR_CODE },
+        });
+
+      const company = await db.company.findUnique({
+        where: { url: args.companyUrl },
+      });
+
+      if (!company)
+        throw new GraphQLError("Company not found!", {
+          extensions: { code: NOT_FOUND_CODE },
+        });
+
+      return company;
     },
   },
 
@@ -198,7 +233,17 @@ export const companyResolvers = {
       });
 
       // TODO: Send email to new employee
-      // email.send(email, password);
+      await sendEmail({
+        email: user.email,
+        subject: "User added to a company",
+        text: "You were added to a company!",
+        html: `
+          <div>
+            Username: ${username}
+            Password: ${password}
+          </div>
+        `,
+      });
 
       // Add the user as employee to the company
       const employee = await db.userInCompany.create({

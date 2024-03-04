@@ -42,7 +42,7 @@ const AdminSchedule = () => {
   const nextEmployee = () => {
     setEmployeesFilter({
       start: employeesFilter.start + 5,
-      end: employeesFilter.end + 4,
+      end: employeesFilter.end + 5,
     });
   };
 
@@ -117,13 +117,24 @@ const AdminSchedule = () => {
 
         <div className="flex-1 h-full">
           <div className="w-full rounded-[11px] overflow-hidden user_company_bg border-2 border-[#F4F4F4]">
-            {employees.map((user, index) => (
-              <div key={index} className="h-[122px] gap-[0px] grid grid-cols-7">
-                {daysOfWeek.map((day, index) => (
-                  <ScheduleBox key={index} user={user} day={day} />
+            {employees.length ? (
+              <>
+                {employees.map((user, index) => (
+                  <div
+                    key={index}
+                    className="h-[122px] gap-[0px] grid grid-cols-7"
+                  >
+                    {daysOfWeek.map((day, index) => (
+                      <ScheduleBox key={index} user={user} day={day} />
+                    ))}
+                  </div>
                 ))}
+              </>
+            ) : (
+              <div className="flex items-center justify-center p-5">
+                <h3>Add a new employee to see their shifts!</h3>
               </div>
-            ))}
+            )}
           </div>
         </div>
       </div>

@@ -50,6 +50,9 @@ dependencies:
   jsonwebtoken:
     specifier: ^9.0.2
     version: 9.0.2
+  nodemailer:
+    specifier: ^6.9.11
+    version: 6.9.11
   nodemon:
     specifier: ^3.0.3
     version: 3.0.3
@@ -1693,6 +1696,11 @@ packages:
         optional: true
     dependencies:
       whatwg-url: 5.0.0
+    dev: false
+
+  /nodemailer@6.9.11:
+    resolution: {integrity: sha512-UiAkgiERuG94kl/3bKfE8o10epvDnl0vokNEtZDPTq9BWzIl6EFT9336SbIT4oaTBD8NmmUTLsQyXHV82eXSWg==}
+    engines: {node: '>=6.0.0'}
     dev: false
 
   /nodemon@3.0.3:

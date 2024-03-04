@@ -8,9 +8,14 @@ import {
   Shift_DeleteShift,
   Shift_UpdateShift,
 } from "@/graphql/mutations/company";
-import { Company_GetPayroll, GetCompany } from "@/graphql/queries/company";
+import {
+  Company_GetPayroll,
+  Company_GetEmployeeCompany,
+  GetCompany,
+} from "@/graphql/queries/company";
 import { queryOptions, useMutation, useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
+import { useAuth } from "./use-auth";
 
 // Handlers
 export const getCompany = async (companyUrl) => {
@@ -19,6 +24,14 @@ export const getCompany = async (companyUrl) => {
   });
 
   return data.GetCompany;
+};
+
+export const getEmployeeCompany = async (companyUrl) => {
+  const data = await client.request(Company_GetEmployeeCompany.toString(), {
+    companyUrl,
+  });
+
+  return data.Company_GetEmployeeCompany;
 };
 
 export const addEmployee = async ({ employeeDto, companyId }) => {
@@ -95,22 +108,32 @@ export const getPayroll = async ({ companyId, filter }) => {
 };
 
 // Options
-export const getUseGetCompanyOptions = ({ companyUrl }) => {
+export const getUseGetCompanyOptions = ({ companyUrl, role }) => {
   return queryOptions({
-    queryKey: ["company", companyUrl],
-    queryFn: () => getCompany(companyUrl),
+    queryKey: ["company", companyUrl, role],
+    queryFn: () => {
+      if (role === "Admin") {
+        return getCompany(companyUrl);
+      } else if (role === "Employee") {
+        return getEmployeeCompany(companyUrl);
+      }
+    },
+    enabled: !!role && !!companyUrl,
   });
 };
 
 // Hooks
 export const useGetCompany = () => {
   const { companyUrl } = useParams();
+  const { data: user } = useAuth();
 
-  const { data, isPending, refetch } = useQuery(
-    getUseGetCompanyOptions({ companyUrl })
+  const companyRole = user?.companies.find((c) => c.url === companyUrl);
+
+  const { data, isPending, isLoading, refetch } = useQuery(
+    getUseGetCompanyOptions({ companyUrl, role: companyRole?.role })
   );
 
-  return { data, isPending, refetch };
+  return { data, isPending, isLoading, refetch };
 };
 
 export const useMutateAddemployee = () => {

@@ -25,6 +25,8 @@ import EmployeeDetails from "./pages/app/company/admin/employee-details";
 import ClientDetails from "./pages/app/company/admin/client-details";
 import PayrollSummary from "./pages/app/company/admin/payroll-summary";
 import HomePage from "./pages/app/home-page";
+import EmployeeSchedule from "./pages/app/company/employee/employee-schedule";
+import EmployeeLayout from "./layouts/EmployeeLayout";
 
 // Define the router configuration
 const router = createBrowserRouter([
@@ -70,7 +72,8 @@ const router = createBrowserRouter([
           },
           {
             path: "/app/:companyUrl/employee",
-            element: <div>App employee</div>,
+            element: <EmployeeLayout />,
+            children: [{ path: "", element: <EmployeeSchedule /> }],
           },
         ],
       },

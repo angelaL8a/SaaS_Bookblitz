@@ -6,19 +6,33 @@ const HomePage = () => {
   const { data } = useAuth();
   const { currentCompany } = useGetCurrentCompany();
 
+  const getUrlRole = (role) => {
+    if (role === "Admin") {
+      return "admin";
+    } else if (role === "Client") {
+      return "client";
+    } else if (role === "Employee") {
+      return "employee";
+    }
+  };
+
   if (data) {
     if (currentCompany) {
-      return <Navigate to={`/app/${currentCompany?.url}/admin`} replace />;
+      return (
+        <Navigate
+          to={`/app/${currentCompany?.url}/${getUrlRole(currentCompany.role)}`}
+          replace
+        />
+      );
     } else {
       const company = data?.companies[0];
 
-      if (company.role === "Admin") {
-        return <Navigate to={`/app/${company.url}/admin`} replace />;
-      } else if (company.role === "Client") {
-        return <Navigate to={`/app/${company.url}/client`} replace />;
-      } else if (company.role === "Employee") {
-        return <Navigate to={`/app/${company.url}/employee`} replace />;
-      }
+      return (
+        <Navigate
+          to={`/app/${company.url}/${getUrlRole(company.role)}`}
+          replace
+        />
+      );
     }
   }
 

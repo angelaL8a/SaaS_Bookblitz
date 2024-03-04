@@ -105,7 +105,12 @@ export const userResolvers = {
         },
       });
 
-      return user;
+      // Generate JWT token with user ID payload
+      const token = jwt.sign({ id: user.id }, envs.JWT_SECRET, {
+        expiresIn: "30d",
+      });
+      // Return the JWT token
+      return token;
     },
 
     /**
@@ -140,6 +145,7 @@ export const userResolvers = {
         throw new GraphQLError(errorMsg, {
           extensions: { code: BAD_USER_INPUT_CODE },
         });
+
       // Generate JWT token with user ID payload
       const token = jwt.sign({ id: user.id }, envs.JWT_SECRET, {
         expiresIn: "30d",

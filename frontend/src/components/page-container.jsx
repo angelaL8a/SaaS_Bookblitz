@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 
 const PageContainer = ({ className, children }) => {
   return (
-    <div className={cn("max-w-[1600px] mx-auto mt-12 px-4", className)}>
+    <div className={cn("max-w-[1800px] mx-auto mt-12 px-4", className)}>
       {children}
     </div>
   );

@@ -4,13 +4,13 @@ import { useGetCompany } from "@/hooks/use-company";
 import { Outlet } from "react-router-dom";
 
 const CompanyLayout = () => {
-  const { data, isPending } = useGetCompany();
+  const { data, isLoading } = useGetCompany();
 
-  if (isPending) {
+  if (isLoading) {
     return <CustomLoader />;
   }
 
-  if (!isPending && !data)
+  if (!isLoading && !data)
     return <ErrorPage error="Company not found." status={404} />;
 
   return <Outlet />;

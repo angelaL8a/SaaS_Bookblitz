@@ -75,6 +75,7 @@ export const companyTypeDefs = gql`
     hoursWorked: Int!
     grossPay: Float!
     paymentPerHour: Float!
+    avgHours: Float!
   }
 
   type PayrollEmployee {
@@ -92,8 +93,12 @@ export const companyTypeDefs = gql`
   }
 
   type Query {
+    # Admin queries
     GetCompany(companyUrl: String!): Company!
     Company_GetPayroll(companyId: String!): [PayrollEmployee!]!
+
+    # Employee queries
+    Company_GetEmployeeCompany(companyUrl: String!): Company!
   }
 
   type Mutation {

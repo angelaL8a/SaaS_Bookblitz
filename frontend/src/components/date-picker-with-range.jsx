@@ -2,7 +2,6 @@ import PropTypes from "prop-types";
 import { format } from "date-fns";
 import { Calendar as CalendarIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import { useGetPayrollStore } from "@/store/payroll-store";
 
@@ -10,17 +9,11 @@ const DatePickerWithRange = ({ className }) => {
   const { setDays, setMonths, setYears, dateRange } = useGetPayrollStore();
 
   return (
-    <div className={cn("flex flex-col", className)}>
+    <div className={cn("flex flex-col items-center gap-2", className)}>
       <div className="flex items-center justify-center">
-        <Button
-          id="date"
-          variant={"outline"}
-          className={cn(
-            "w-[300px] justify-start text-left font-normal",
-            !dateRange && "text-muted-foreground"
-          )}
-        >
-          <CalendarIcon className="w-4 h-4 mr-2" />
+        <div className="flex items-center text-lg text-muted-foreground">
+          <CalendarIcon className="w-5 h-5 mr-1" />
+
           {dateRange?.from ? (
             dateRange.to ? (
               <>
@@ -33,10 +26,10 @@ const DatePickerWithRange = ({ className }) => {
           ) : (
             <span>Pick a date</span>
           )}
-        </Button>
+        </div>
       </div>
 
-      <div className="mt-1">
+      <div className="w-full">
         <Calendar
           initialFocus
           mode="range"

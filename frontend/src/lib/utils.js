@@ -177,6 +177,9 @@ export const convertToDateTime = (obj) => {
   return formattedDateTime;
 };
 
+/**
+ * Output format: 13/FEB/2024
+ */
 export const getTableDate = (inputDate) => {
   // Convert the date string to a date object
   const date = new Date(inputDate);
@@ -206,6 +209,9 @@ export const getTableDate = (inputDate) => {
   return `${day}/${month}/${year}`;
 };
 
+/**
+ * Function to upload a photo to cloudinary
+ */
 export const uploadPhoto = async (currentPhoto) => {
   const formDataToSend = new FormData();
   formDataToSend.append("file", currentPhoto);
@@ -226,6 +232,9 @@ export const uploadPhoto = async (currentPhoto) => {
   };
 };
 
+/**
+ * Function to delete a photo to cloudinary
+ */
 export const deletePhoto = async (userPublicId) => {
   await axiosClient.delete(`/files/remove?public_id=${userPublicId}`);
 

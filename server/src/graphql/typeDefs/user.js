@@ -38,7 +38,7 @@ export const userTypeDefs = gql`
   }
 
   type Mutation {
-    RegisterUser(userDto: UserRegisterDto!): User!
+    RegisterUser(userDto: UserRegisterDto!): String!
     LoginUser(userDto: UserLoginDto!): String!
   }
 `;

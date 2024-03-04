@@ -8,9 +8,10 @@ function Calendar({ className, classNames, showOutsideDays = true, ...props }) {
   return (
     <DayPicker
       showOutsideDays={showOutsideDays}
-      className={cn("p-3", className)}
+      className={cn("w-full", className)}
       classNames={{
-        months: "flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0",
+        months:
+          "flex flex-col sm:flex-row space-y-4 justify-between w-full sm:space-y-0",
         month:
           "space-y-4 py-2 px-4 border border-[rgba(0,0,0,0.01)] bg-[rgba(123,244,244,0.23)] rounded-md shadow-[0px_4px_9.7px_0px_rgba(0,0,0,0.04)]",
         caption: "flex justify-center pt-1 relative items-center",
