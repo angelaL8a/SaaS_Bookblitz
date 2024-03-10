@@ -1,0 +1,16 @@
+Backend
+
+
+Fronted
+
+
+Linear
+For the task organization and tracking endeavor, Linear was chosen as the preferred tool. Linear proves to be an exceptional asset for engineers and agile practitioners. It seamlessly integrates with a wide array of industry-standard tools, including GitHub, GitLab, Slack, Figma, Google Sheets, Google Calendar, and Notion. This interconnectivity ensures that Linear seamlessly blends into the existing ecosystem, enhancing the workflow without disrupting established processes. Furthermore, Linear's user interface is a breath of fresh air: not only is it visually appealing, but it's also remarkably intuitive. The simplicity of setting up and navigating through Linear means teams can adopt it with minimal friction, leading to a more agile and efficient project management experience.
+
+The subsequent section will outline the organization and grouping strategies developed for the project, enabling an effective utilization of the aforementioned technologies.
+
+https://medium.com/@kaiiguangg/linear-streamlining-project-management-for-it-teams-2802412d308c
+
+
+
+shadow-[0px_9.92px_39.69px_-18px_rgba(0,0,0,0.25)]

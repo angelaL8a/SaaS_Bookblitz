@@ -1,5 +1,6 @@
 import tailwindcssAnimate from "tailwindcss-animate";
 import tailwindScrollbarHide from "tailwind-scrollbar-hide";
+import taiwindAspectRatio from "@tailwindcss/aspect-ratio";
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -73,5 +74,5 @@ export default {
       },
     },
   },
-  plugins: [tailwindcssAnimate, tailwindScrollbarHide],
+  plugins: [tailwindcssAnimate, tailwindScrollbarHide, taiwindAspectRatio],
 };

@@ -142,6 +142,10 @@ export const shiftResolvers = {
             if (lastApt.referencialImageId !== referencialImageId) {
               await removeImage(lastApt.referencialImageId);
             }
+
+            if (lastApt.referencialImageId && !referencialImageId) {
+              await removeImage(lastApt.referencialImageId);
+            }
           }
 
           await db.appointment.create({

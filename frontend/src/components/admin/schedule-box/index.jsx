@@ -155,12 +155,11 @@ const Shift = ({ shift, user, day }) => {
                     key={index}
                     className="bg-gradient-to-b from-[#EBC0FF] from-0% to-[#FBF3FF] via-[#FFF] via-0% to-100% rounded-[28px] drop-shadow-[0px_4px_8.1px_rgba(176,135,244,0.24)] flex items-start py-6 px-8 gap-5 border border-[rgba(0,0,0,0.01)]"
                   >
-                    {/* <div className="w-[180px] bg-blue-500 h-[120px] rounded-lg"></div> */}
                     <CustomImage
                       src={apt.referencialImageUrl}
-                      className={`w-[186px] h-[120px] rounded-lg relative ${shuffle(
-                        gradientPastelColors
-                      ).pop()}`}
+                      className={`w-[186px] h-[120px] rounded-lg relative ${
+                        shuffle(gradientPastelColors()).pop().color
+                      }`}
                     >
                       <button className="absolute bottom-2 left-2 z-50 bg-[#FCF6FF] shadow-[4px_4px_15px_0px_#C3C3C3,_-6px_-4px_15px_0px_#FFF] rounded-full px-3 py-2 font-poppins text-[#8B8B8B] text-xs">
                         Feedbacks

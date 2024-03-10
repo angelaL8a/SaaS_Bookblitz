@@ -1,21 +1,34 @@
-import { cn } from "@/lib/utils";
 import PropTypes from "prop-types";
+import { cn } from "@/lib/utils";
+import { useGetDays } from "@/store/schedule-store";
 import { useMemo } from "react";
 
 const WeekDay = ({ day }) => {
+  const { setCurrentDay, currentDay } = useGetDays();
+
   const isCurrentDay = useMemo(() => {
     const currentDate = new Date();
 
-    if (
-      day.dayNumber === currentDate.getUTCDate() &&
-      day.monthNumber === currentDate.getUTCMonth() &&
-      day.year === currentDate.getUTCFullYear()
-    ) {
-      return true;
+    if (currentDay) {
+      if (
+        currentDay.dayNumber === day.dayNumber &&
+        currentDay.monthNumber === day.monthNumber &&
+        currentDay.year === day.year
+      ) {
+        return true;
+      }
+    } else {
+      if (
+        day.dayNumber === currentDate.getUTCDate() &&
+        day.monthNumber === currentDate.getUTCMonth() &&
+        day.year === currentDate.getUTCFullYear()
+      ) {
+        return true;
+      }
     }
 
     return false;
-  }, [day]);
+  }, [day, currentDay]);
 
   return (
     <div
@@ -24,8 +37,9 @@ const WeekDay = ({ day }) => {
       )}
     >
       <div
+        onClick={() => setCurrentDay(day)}
         className={cn(
-          "py-2 w-full flex justify-center items-center",
+          "py-2 w-full flex justify-center items-center cursor-pointer",
           isCurrentDay
             ? "bg-[#C8C0FF] absolute h-[43px] -top-[3px] shadow-[0px_4px_6.7px_0px_rgba(200,191,255,0.34)] rounded-[15px] text-white"
             : ""

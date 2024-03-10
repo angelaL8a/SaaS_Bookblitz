@@ -17,16 +17,18 @@ const ImagePicker = ({ previewPhoto, className, onChange }) => {
               onChange({
                 file: null,
                 url: null,
+                referencialImageId: "",
+                referencialImageUrl: "",
               });
             }}
-            className="absolute top-2 right-2 rounded-full bg-white/50 backdrop-blur h-8 w-8 flex items-center justify-center text-white"
+            className="absolute flex items-center justify-center w-8 h-8 text-white rounded-full top-2 right-2 bg-white/50 backdrop-blur"
           >
-            <XIcon className="h-4 w-4" />
+            <XIcon className="w-4 h-4" />
           </button>
 
           <img
             src={previewPhoto}
-            className="w-full h-full object-cover"
+            className="object-cover w-full h-full"
             alt="Preview photo"
           />
         </div>
@@ -39,7 +41,7 @@ const ImagePicker = ({ previewPhoto, className, onChange }) => {
           )}
           onClick={() => fileRef.current?.click()}
         >
-          <PlusCircleIcon className="h-5 mb-1 text-muted-foreground w-5" />
+          <PlusCircleIcon className="w-5 h-5 mb-1 text-muted-foreground" />
           <span className="text-muted-foreground">Select photo</span>
         </button>
       )}

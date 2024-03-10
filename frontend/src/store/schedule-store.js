@@ -51,10 +51,14 @@ export const useGetScheduleStore = create()((set) => ({
   setDaysOfWeek: (value) => set(() => ({ daysOfWeek: value })),
   addDay: (value) =>
     set((state) => ({ daysOfWeek: [...state.daysOfWeek, value] })),
+  // Employee logic
+  currentDay: null,
+  setCurrentDay: (value) => set(() => ({ currentDay: value })),
 }));
 
 export const useGetDays = () => {
-  const { daysOfWeek, setDaysOfWeek } = useGetScheduleStore();
+  const { daysOfWeek, setDaysOfWeek, setCurrentDay, currentDay } =
+    useGetScheduleStore();
 
   // State to keep track of the current week's start date
   const [currentWeekStartDate, setCurrentWeekStartDate] = useState(() => {
@@ -120,5 +124,13 @@ export const useGetDays = () => {
     setDaysOfWeek(getDays());
   }, [setDaysOfWeek, getDays]);
 
-  return { formatDate, daysOfWeek, nextWeek, prevWeek, currentWeekStartDate };
+  return {
+    formatDate,
+    daysOfWeek,
+    nextWeek,
+    prevWeek,
+    currentWeekStartDate,
+    setCurrentDay,
+    currentDay,
+  };
 };

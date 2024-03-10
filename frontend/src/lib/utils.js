@@ -20,14 +20,25 @@ export const pastelColors = [
   "#D2E0FB",
 ];
 
-export const gradientPastelColors = [
-  "[background:linear-gradient(180deg,#FFD6C0_0%,#FFC1AA_100%)]",
-  "[background:linear-gradient(180deg,#9FF5CE_0%,#7AFFC3_100%)]",
-  "[background:linear-gradient(180deg,#F1BEF3_0%,#FB89FF_100%)]",
-  "[background:linear-gradient(180deg,#DDBDFF_0%,#D4ABFF_100%)]",
-  "[background:linear-gradient(180deg,#A4E2FB_0%,#89DDFF_100%)]",
-  "[background:linear-gradient(180deg,#FBB_0%,#FFADAD_100%)]",
-];
+export const gradientPastelColors = () => {
+  const colorsArray = [
+    "[background:linear-gradient(180deg,#FFD6C0_0%,#FFC1AA_100%)]",
+    "[background:linear-gradient(180deg,#9FF5CE_0%,#7AFFC3_100%)]",
+    "[background:linear-gradient(180deg,#F1BEF3_0%,#FB89FF_100%)]",
+    "[background:linear-gradient(180deg,#DDBDFF_0%,#D4ABFF_100%)]",
+    "[background:linear-gradient(180deg,#A4E2FB_0%,#89DDFF_100%)]",
+    "[background:linear-gradient(180deg,#FBB_0%,#FFADAD_100%)]",
+  ];
+
+  return colorsArray.map((color) => {
+    const textColor = `${color} [background-clip:text]`;
+
+    return {
+      textColor,
+      color,
+    };
+  });
+};
 
 export function cn(...inputs) {
   return twMerge(clsx(inputs));

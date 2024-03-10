@@ -56,11 +56,18 @@ const Appointment = ({ appointment }) => {
         <div className="flex flex-col w-[180px] gap-5">
           <ImagePicker
             previewPhoto={appointment.previewPhoto}
-            onChange={({ file, url }) => {
+            onChange={({
+              file,
+              url,
+              referencialImageUrl,
+              referencialImageId,
+            }) => {
               updateAppointment({
                 ...appointment,
                 currentPhoto: file,
                 previewPhoto: url,
+                referencialImageUrl,
+                referencialImageId,
               });
             }}
             className="w-full h-[140px]"

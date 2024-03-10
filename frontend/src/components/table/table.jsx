@@ -31,7 +31,7 @@ const Table = ({ columns, children, headerClassName, containerClassName }) => {
           </div>
         </div>
 
-        <div className="px-8 mt-6 max-h-[850px] overflow-y-auto">
+        <div className="px-8 mt-6 max-h-[530px] overflow-y-auto">
           {children}
         </div>
       </div>

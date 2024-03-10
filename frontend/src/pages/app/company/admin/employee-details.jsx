@@ -195,7 +195,7 @@ const EmployeeDetails = () => {
         ))}
       </Table>
 
-      <div className="flex justify-center pt-4 pb-12">
+      <div className="flex justify-center pt-4">
         <AddEmployeeModal />
       </div>
     </PageContainer>
