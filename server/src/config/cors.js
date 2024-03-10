@@ -1,7 +1,13 @@
 // CORS Configuration for Express
 
+import { envs } from "./env.js";
+
 // Define an array of allowed origins (whitelist)
-const whitelist = ["http://localhost:5173", "http://localhost:4000"];
+const whitelist = [
+  "http://localhost:5173",
+  "http://localhost:4000",
+  envs.CLIENT_URL,
+];
 
 // Export the CORS options
 export const corsOptions = {

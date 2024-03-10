@@ -18,4 +18,5 @@ export const envs = {
 
   MAIL_USER: env.get("MAIL_USER").required().asString(),
   MAIL_PASS: env.get("MAIL_PASS").required().asString(),
+  CLIENT_URL: env.get("CLIENT_URL").required().asString(),
 };
