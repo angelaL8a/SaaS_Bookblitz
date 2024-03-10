@@ -17,6 +17,7 @@ import { cn } from "@/lib/utils";
 import { useHandleCatchError } from "@/hooks/use-handle-catch-error";
 import { useEffect } from "react";
 import CustomLoader from "@/components/custom-loader";
+import { Separator } from "@/components/ui/separator";
 
 const SettingsPage = () => {
   const navigate = useNavigate();
@@ -93,6 +94,8 @@ const SettingsPage = () => {
               onChange={(e) => setLastName(e.target.value)}
               value={lastName}
             />
+
+            <Separator className="my-3 w-[350px]" />
 
             <InputSettings label="Gender">
               <Select
