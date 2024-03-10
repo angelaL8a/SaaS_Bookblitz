@@ -6,7 +6,9 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon src/index.js",
-    "start": "node src/index.js"
+    "start": "pnpm migrate:deploy && pnpm generate && node src/index.js",
+    "migrate:deploy": "prisma migrate deploy",
+    "generate": "prisma generate"
   },
   "keywords": [],
   "author": "",
