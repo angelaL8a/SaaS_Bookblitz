@@ -14,6 +14,8 @@ const Appointment = ({ apt, setSelectedApt }) => {
 
   const dateInfo = extractDateInfo(apt.date);
 
+  const user = apt.client ? apt.client?.user : apt.employee?.user;
+
   return (
     <button
       type="button"
@@ -49,20 +51,14 @@ const Appointment = ({ apt, setSelectedApt }) => {
           {convertTime(apt.startTime)} - {convertTime(apt.endTime)}
         </div>
 
-        <Avatar
-          firstName={
-            apt.client ? apt.client.user.firstName : apt.employee.user.firstName
-          }
-          lastName={
-            apt.client ? apt.client?.user.lastName : apt.employee.user.lastName
-          }
-          userImageUrl={
-            apt.client
-              ? apt.client?.user.userImageUrl
-              : apt.employee.user.userImageUrl
-          }
-          name={apt.client ? apt.client?.user.name : apt.employee.user.name}
-        />
+        {user ? (
+          <Avatar
+            firstName={user?.firstName}
+            lastName={user?.lastName}
+            userImageUrl={user?.userImageUrl}
+            name={user?.name}
+          />
+        ) : null}
       </div>
     </button>
   );

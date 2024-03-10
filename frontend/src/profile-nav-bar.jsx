@@ -13,13 +13,13 @@ const ProfileNavBar = () => {
       className="flex gap-10 items-center max-w-[1200px] mx-auto"
     >
       <NavigationItem
-        title="Schedule"
+        title="Profile"
         variant="default"
         to={`/app/${company.url}/profile`}
       />
 
       <NavigationItem
-        title="Employee Details"
+        title="Settigns"
         variant="secondary"
         to={`/app/${company.url}/profile/settings`}
       />

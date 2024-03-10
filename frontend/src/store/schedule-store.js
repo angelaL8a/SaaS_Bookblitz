@@ -27,6 +27,9 @@ export const getEmptyAppointment = () => {
   };
 };
 
+/**
+ * Hook made with zustand to manage the appointments of the calendar.
+ */
 export const useGetScheduleStore = create()((set) => ({
   appointments: [getEmptyAppointment()],
   setAppointments: (value) => set(() => ({ appointments: value })),
@@ -56,6 +59,9 @@ export const useGetScheduleStore = create()((set) => ({
   setCurrentDay: (value) => set(() => ({ currentDay: value })),
 }));
 
+/**
+ * Custom hook built on top of "useGetScheduleStore" with additional features.
+ */
 export const useGetDays = () => {
   const { daysOfWeek, setDaysOfWeek, setCurrentDay, currentDay } =
     useGetScheduleStore();

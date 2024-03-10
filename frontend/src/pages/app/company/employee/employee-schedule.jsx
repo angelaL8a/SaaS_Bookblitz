@@ -27,7 +27,7 @@ const EmployeeSchedule = () => {
       currentInfo.monthName === currentDay.monthName &&
       currentInfo.dayNumber === currentDay.dayNumber &&
       currentInfo.year === currentDay.year &&
-      user.id === s.employee.user.id
+      user?.id === s.employee.user.id
     ) {
       return s;
     }

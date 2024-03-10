@@ -34,7 +34,7 @@ import ProfileLayout from "./layouts/ProfileLayout";
 import ProfilePage from "./pages/app/company/profile";
 import SettingsPage from "./pages/app/company/profile/settings";
 
-// Define the router configuration
+// Routes of the application
 const router = createBrowserRouter([
   {
     path: "/",

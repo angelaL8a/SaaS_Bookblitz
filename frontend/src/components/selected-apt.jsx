@@ -63,12 +63,14 @@ const SelectedApt = ({ selectedApt, setSelectedApt }) => {
 
       <div className="flex items-center gap-5 mt-8">
         <div className="flex flex-col items-center w-1/2 gap-1">
-          <Avatar
-            firstName={user.user.firstName}
-            lastName={user.user.lastName}
-            userImageUrl={user.user.userImageUrl}
-            name={user.user.name}
-          />
+          {user?.user ? (
+            <Avatar
+              firstName={user.user.firstName}
+              lastName={user.user.lastName}
+              userImageUrl={user.user.userImageUrl}
+              name={user.user.name}
+            />
+          ) : null}
 
           <Rating
             color={"#009A7F"}
