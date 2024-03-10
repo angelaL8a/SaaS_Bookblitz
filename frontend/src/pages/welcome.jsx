@@ -37,7 +37,7 @@ const WelcomePage = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-200 via-blue-200 to-teal-100">
-      <h1 className="welcome_text text-[60px] md:text-[90px] lg:text-[100px] text-center font-[800] pt-10 lg:pt-20">
+      <h1 className="welcome_text text-[60px] md:text-[90px] lg:text-[100px] text-center font-[800] pt-6">
         Welcome!
       </h1>
 

@@ -66,133 +66,142 @@ const EmployeeDetails = () => {
       </h1>
 
       <Table columns={employeeDetailsColumns}>
-        {employees.map((employee, index) => (
-          <TableContent
-            key={index}
-            columns={employeeDetailsColumns}
-            columnsData={[
-              {
-                name: "Name",
-                element: (
-                  <div className="flex items-center gap-2">
-                    <CustomImage
-                      src={employee.user.userImageUrl}
-                      className="w-10 h-10 rounded-full"
-                    />
+        {employees.length > 0 ? (
+          <>
+            {employees.map((employee, index) => (
+              <TableContent
+                key={index}
+                columns={employeeDetailsColumns}
+                columnsData={[
+                  {
+                    name: "Name",
+                    element: (
+                      <div className="flex items-center gap-2">
+                        <CustomImage
+                          src={employee.user.userImageUrl}
+                          className="w-10 h-10 rounded-full"
+                        />
 
-                    <div className="flex flex-col flex-1 min-w-0">
-                      <span className="text-[#25213B] text-lg font-medium truncate">
-                        {employee.user.name}
-                      </span>
-                      <span className="text-[#6E6893] -mt-1.5 text-sm truncate">
-                        {getTableDate(employee.birthDate)}
-                      </span>
-                    </div>
-                  </div>
-                ),
-              },
-              {
-                name: "Contact",
-                element: (
-                  <div className="flex items-center justify-center text-[#6E6893]">
-                    <span className="truncate">{employee.email}</span>
-                  </div>
-                ),
-              },
-              {
-                name: "Phone",
-                element: (
-                  <div className="flex items-center justify-center text-[#6E6893]">
-                    {employee.telephone}
-                  </div>
-                ),
-              },
-              {
-                name: "Position",
-                element: (
-                  <div className="flex items-center justify-center">
-                    <div className="flex items-center gap-2 px-4 py-1 rounded-full bg-[#F1BEF3]">
-                      <div className="h-2 w-2 bg-[#8E8E8E] rounded-full"></div>
+                        <div className="flex flex-col flex-1 min-w-0">
+                          <span className="text-[#25213B] text-lg font-medium truncate">
+                            {employee.user.name}
+                          </span>
+                          <span className="text-[#6E6893] -mt-1.5 text-sm truncate">
+                            {getTableDate(employee.birthDate)}
+                          </span>
+                        </div>
+                      </div>
+                    ),
+                  },
+                  {
+                    name: "Contact",
+                    element: (
+                      <div className="flex items-center justify-center text-[#6E6893]">
+                        <span className="truncate">{employee.email}</span>
+                      </div>
+                    ),
+                  },
+                  {
+                    name: "Phone",
+                    element: (
+                      <div className="flex items-center justify-center text-[#6E6893]">
+                        {employee.telephone}
+                      </div>
+                    ),
+                  },
+                  {
+                    name: "Position",
+                    element: (
+                      <div className="flex items-center justify-center">
+                        <div className="flex items-center gap-2 px-4 py-1 rounded-full bg-[#F1BEF3]">
+                          <div className="h-2 w-2 bg-[#8E8E8E] rounded-full"></div>
 
-                      {employee.position}
-                    </div>
-                  </div>
-                ),
-              },
-              {
-                name: "Gender",
-                element: (
-                  <div className="flex items-start justify-center text-[#ACACAC] uppercase">
-                    {employee.gender}
-                  </div>
-                ),
-              },
-              {
-                name: "Address",
-                element: (
-                  <div className="flex items-start justify-center text-[#6E6893]">
-                    <span className="truncate">{employee.address}</span>
-                  </div>
-                ),
-              },
-              {
-                name: "Average Rating",
-                element: (
-                  <div className="flex items-start justify-center">
-                    <Rating
-                      color={employee.employeeColor}
-                      value={Math.floor(Math.random() * (5 - 1 + 1)) + 1}
-                    />
-                  </div>
-                ),
-              },
-              {
-                name: "More",
-                element: (
-                  <div className="flex items-center justify-end gap-2 pr-6">
-                    <button className="flex items-center justify-center w-8 h-8 rounded-sm hover:bg-[rgba(255,255,255,0.31)] hover:shadow-[0px_2px_5px_0px_rgba(0,0,0,0.10)]">
-                      <EyeIcon className="w-5 h-5 text-muted-foreground" />
-                    </button>
-
-                    <AlertDialog>
-                      <AlertDialogTrigger asChild>
-                        <button
-                          type="button"
-                          className="flex items-center justify-center w-8 h-8 rounded-sm hover:bg-[rgba(255,255,255,0.31)] hover:shadow-[0px_2px_5px_0px_rgba(0,0,0,0.10)]"
-                        >
-                          <Trash2Icon className="w-5 h-5 text-muted-foreground" />
+                          {employee.position}
+                        </div>
+                      </div>
+                    ),
+                  },
+                  {
+                    name: "Gender",
+                    element: (
+                      <div className="flex items-start justify-center text-[#ACACAC] uppercase">
+                        {employee.gender}
+                      </div>
+                    ),
+                  },
+                  {
+                    name: "Address",
+                    element: (
+                      <div className="flex items-start justify-center text-[#6E6893]">
+                        <span className="truncate">{employee.address}</span>
+                      </div>
+                    ),
+                  },
+                  {
+                    name: "Average Rating",
+                    element: (
+                      <div className="flex items-start justify-center">
+                        <Rating
+                          color={employee.employeeColor}
+                          value={Math.floor(Math.random() * (5 - 1 + 1)) + 1}
+                        />
+                      </div>
+                    ),
+                  },
+                  {
+                    name: "More",
+                    element: (
+                      <div className="flex items-center justify-end gap-2 pr-6">
+                        <button className="flex items-center justify-center w-8 h-8 rounded-sm hover:bg-[rgba(255,255,255,0.31)] hover:shadow-[0px_2px_5px_0px_rgba(0,0,0,0.10)]">
+                          <EyeIcon className="w-5 h-5 text-muted-foreground" />
                         </button>
-                      </AlertDialogTrigger>
 
-                      <AlertDialogContent>
-                        <AlertDialogHeader>
-                          <AlertDialogTitle>
-                            Are you absolutely sure?
-                          </AlertDialogTitle>
-                          <AlertDialogDescription>
-                            This action cannot be undone. This will permanently
-                            delete the employee and all the related appointments
-                            and shifts from our servers.
-                          </AlertDialogDescription>
-                        </AlertDialogHeader>
+                        <AlertDialog>
+                          <AlertDialogTrigger asChild>
+                            <button
+                              type="button"
+                              className="flex items-center justify-center w-8 h-8 rounded-sm hover:bg-[rgba(255,255,255,0.31)] hover:shadow-[0px_2px_5px_0px_rgba(0,0,0,0.10)]"
+                            >
+                              <Trash2Icon className="w-5 h-5 text-muted-foreground" />
+                            </button>
+                          </AlertDialogTrigger>
 
-                        <AlertDialogFooter>
-                          <AlertDialogCancel>Cancel</AlertDialogCancel>
-                          <AlertDialogAction
-                            onClick={() => deleteEmployee(employee.id)}
-                            className="text-red-500"
-                          >
-                            Delete employee
-                          </AlertDialogAction>
-                        </AlertDialogFooter>
-                      </AlertDialogContent>
-                    </AlertDialog>
-                  </div>
-                ),
-              },
-            ]}
-          />
-        ))}
+                          <AlertDialogContent>
+                            <AlertDialogHeader>
+                              <AlertDialogTitle>
+                                Are you absolutely sure?
+                              </AlertDialogTitle>
+                              <AlertDialogDescription>
+                                This action cannot be undone. This will
+                                permanently delete the employee and all the
+                                related appointments and shifts from our
+                                servers.
+                              </AlertDialogDescription>
+                            </AlertDialogHeader>
+
+                            <AlertDialogFooter>
+                              <AlertDialogCancel>Cancel</AlertDialogCancel>
+                              <AlertDialogAction
+                                onClick={() => deleteEmployee(employee.id)}
+                                className="text-white bg-red-300"
+                              >
+                                Delete employee
+                              </AlertDialogAction>
+                            </AlertDialogFooter>
+                          </AlertDialogContent>
+                        </AlertDialog>
+                      </div>
+                    ),
+                  },
+                ]}
+              />
+            ))}
+          </>
+        ) : (
+          <div className="flex items-center justify-center p-5">
+            No employees here. Add one to see the magic.
+          </div>
+        )}
       </Table>
 
       <div className="flex justify-center pt-4">

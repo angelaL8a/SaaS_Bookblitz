@@ -31,7 +31,7 @@ export const companyResolvers = {
 
         return users;
       } else if (context.isCompanyMember) {
-        const employee = await db.userInCompany.findUnique({
+        const member = await db.userInCompany.findUnique({
           where: {
             userId_companyId: {
               userId: context?.user.id,
@@ -40,7 +40,7 @@ export const companyResolvers = {
           },
         });
 
-        return [employee];
+        return [member];
       }
     },
 

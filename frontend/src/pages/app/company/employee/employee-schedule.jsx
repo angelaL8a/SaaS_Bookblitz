@@ -18,7 +18,7 @@ const EmployeeSchedule = () => {
 
   const [selectedApt, setSelectedApt] = useState(null);
 
-  const shift = company?.shifts.find((s) => {
+  const shift = company?.shifts?.find((s) => {
     const currentInfo = extractDateInfo(s.date);
 
     if (

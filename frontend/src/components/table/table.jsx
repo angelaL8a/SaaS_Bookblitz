@@ -23,7 +23,7 @@ const Table = ({ columns, children, headerClassName, containerClassName }) => {
                 key={index}
                 className="flex items-center justify-center w-full h-full col-span-1"
               >
-                <span className="uppercase text-[19px] truncate text-[#6E6893] font-medium">
+                <span className="uppercase truncate text-[#6E6893] font-medium">
                   {col}
                 </span>
               </div>

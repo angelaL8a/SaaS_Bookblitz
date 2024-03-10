@@ -92,8 +92,8 @@ const AddClientModal = () => {
         setPreviewPhoto(null);
 
         toast({
-          title: "Employee Added",
-          description: "Employee added successfully.",
+          title: "Client Added",
+          description: "Client added successfully.",
         });
       }
     } catch (error) {
