@@ -55,7 +55,7 @@ const HourPicker = ({
     >
       <div className={cn("mb-1 text-sm font-[400]")}>{label}</div>
 
-      <div className="flex items-center gap-2 justify-between w-full">
+      <div className="flex items-center justify-between w-full gap-2">
         <div className={cn("font-semibold text-[#2F2F2F]", labelClassName)}>
           {currentHour.hour} : {currentHour.minute} {currentHour.time}
         </div>
@@ -63,14 +63,14 @@ const HourPicker = ({
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <button type="button">
-              <ClockIcon className="h-5 w-5 text-muted-foreground" />
+              <ClockIcon className="w-5 h-5 text-muted-foreground" />
             </button>
           </DropdownMenuTrigger>
 
           <DropdownMenuContent className="p-0 h-[250px]">
-            <div className="flex items-start h-full">
+            <div className="grid w-full h-full grid-cols-3">
               {/* Hour */}
-              <div className="flex flex-col overflow-y-auto overflow-x-hidden max-h-full">
+              <div className="flex flex-col max-h-full overflow-x-hidden overflow-y-auto">
                 {HOURS.map((h, index) => (
                   <ButtonPicker
                     key={index}
@@ -87,7 +87,7 @@ const HourPicker = ({
               </div>
 
               {/* Minutes */}
-              <div className="flex flex-col overflow-y-auto overflow-x-hidden max-h-full">
+              <div className="flex flex-col max-h-full overflow-x-hidden overflow-y-auto">
                 {MINUTES.map((m, index) => (
                   <ButtonPicker
                     key={index}
@@ -104,7 +104,7 @@ const HourPicker = ({
               </div>
 
               {/* Time */}
-              <div className="flex flex-col overflow-y-auto overflow-x-hidden max-h-full">
+              <div className="flex flex-col max-h-full overflow-x-hidden overflow-y-auto">
                 {TIME.map((t, index) => (
                   <ButtonPicker
                     key={index}

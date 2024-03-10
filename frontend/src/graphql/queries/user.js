@@ -9,6 +9,7 @@ export const GetAccount = gql`
       lastName
       username
       userImageUrl
+      createdAt
       companies {
         id
         name

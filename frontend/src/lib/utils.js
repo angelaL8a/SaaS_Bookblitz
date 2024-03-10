@@ -244,7 +244,7 @@ export const uploadPhoto = async (currentPhoto) => {
 };
 
 /**
- * Function to delete a photo to cloudinary
+ * Function to delete a photo from cloudinary
  */
 export const deletePhoto = async (userPublicId) => {
   await axiosClient.delete(`/files/remove?public_id=${userPublicId}`);

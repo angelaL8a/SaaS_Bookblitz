@@ -11,3 +11,9 @@ export const LoginUser = gql`
     LoginUser(userDto: $userDto)
   }
 `;
+
+export const UpdateProfile = gql`
+  mutation UpdateProfile($userDto: UserUpdateDto!, $companyUrl: String!) {
+    UpdateProfile(userDto: $userDto, companyUrl: $companyUrl)
+  }
+`;

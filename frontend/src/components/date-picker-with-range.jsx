@@ -3,11 +3,15 @@ import { format } from "date-fns";
 import { Calendar as CalendarIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Calendar } from "@/components/ui/calendar";
-import { useGetPayrollStore } from "@/store/payroll-store";
 
-const DatePickerWithRange = ({ className }) => {
-  const { setDays, setMonths, setYears, dateRange } = useGetPayrollStore();
-
+const DatePickerWithRange = ({
+  className,
+  setDays,
+  setMonths,
+  setYears,
+  dateRange,
+  numberOfMonths = 2,
+}) => {
   return (
     <div className={cn("flex flex-col items-center gap-2", className)}>
       <div className="flex items-center justify-center">
@@ -40,7 +44,7 @@ const DatePickerWithRange = ({ className }) => {
             setMonths(date);
             setDays(date);
           }}
-          numberOfMonths={2}
+          numberOfMonths={numberOfMonths}
         />
       </div>
     </div>
@@ -48,6 +52,11 @@ const DatePickerWithRange = ({ className }) => {
 };
 DatePickerWithRange.propTypes = {
   className: PropTypes.string,
+  setDays: PropTypes.func.isRequired,
+  setMonths: PropTypes.func.isRequired,
+  setYears: PropTypes.func.isRequired,
+  dateRange: PropTypes.object.isRequired,
+  numberOfMonths: PropTypes.number,
 };
 
 export default DatePickerWithRange;

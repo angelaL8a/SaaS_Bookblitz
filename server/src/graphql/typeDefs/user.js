@@ -33,6 +33,13 @@ export const userTypeDefs = gql`
     password: String!
   }
 
+  input UserUpdateDto {
+    firstName: String!
+    lastName: String!
+    gender: String
+    telephone: String
+  }
+
   type Query {
     GetAccount: User!
   }
@@ -40,5 +47,6 @@ export const userTypeDefs = gql`
   type Mutation {
     RegisterUser(userDto: UserRegisterDto!): String!
     LoginUser(userDto: UserLoginDto!): String!
+    UpdateProfile(userDto: UserUpdateDto!, companyUrl: String!): String!
   }
 `;

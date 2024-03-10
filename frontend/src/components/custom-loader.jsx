@@ -6,7 +6,7 @@ const CustomLoader = ({ className, containerClassName }) => {
   return (
     <div
       className={cn(
-        "w-full h-full mt-10 flex justify-center",
+        "w-full h-full mt-10 flex justify-center items-center",
         containerClassName
       )}
     >

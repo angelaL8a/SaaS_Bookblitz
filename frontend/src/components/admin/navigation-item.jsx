@@ -44,7 +44,8 @@ const NavigationItem = ({ title, variant, to }) => {
         itemVariants({
           variant,
           className: getVariant(),
-        })
+        }),
+        "truncate"
       )}
     >
       {title}

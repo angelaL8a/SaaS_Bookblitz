@@ -3,9 +3,12 @@ import SelectCompany from "./select-company";
 import { Button } from "../ui/button";
 import { useLogout } from "@/hooks/use-logout";
 import { useAuth } from "@/hooks/use-auth";
+import { Link } from "react-router-dom";
+import { useGetCompany } from "@/hooks/use-company";
 
 const Header = () => {
   const { data } = useAuth();
+  const { data: company } = useGetCompany();
   const { logout } = useLogout();
 
   return (
@@ -13,10 +16,12 @@ const Header = () => {
       <SelectCompany />
 
       <div className="flex items-center gap-3">
-        <CustomImage
-          src={data.userImageUrl}
-          className="h-10 w-10 rounded-full border"
-        />
+        <Link to={`/app/${company?.url}/profile`}>
+          <CustomImage
+            src={data?.userImageUrl}
+            className="w-10 h-10 border rounded-full"
+          />
+        </Link>
 
         <Button
           type="button"

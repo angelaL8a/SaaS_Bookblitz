@@ -1,5 +1,9 @@
 import { client } from "@/graphql/client";
-import { LoginUser, RegisterUser } from "@/graphql/mutations/user";
+import {
+  LoginUser,
+  RegisterUser,
+  UpdateProfile,
+} from "@/graphql/mutations/user";
 import { GetAccount } from "@/graphql/queries/user";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
@@ -36,6 +40,15 @@ export const account = async () => {
   return data.GetAccount;
 };
 
+export const updateProfile = async ({ userDto, companyUrl }) => {
+  const data = await client.request(UpdateProfile.toString(), {
+    userDto,
+    companyUrl,
+  });
+
+  return data.UpdateProfile;
+};
+
 // Hooks
 /**
  * Custom hook for registering a new user.
@@ -68,4 +81,13 @@ export const useAuth = () => {
   });
 
   return { isLoading: isPending, data, refetch };
+};
+
+export const useMutateUpdateProfile = () => {
+  const { isPending, mutateAsync } = useMutation({
+    mutationFn: ({ userDto, companyUrl }) =>
+      updateProfile({ userDto, companyUrl }),
+  });
+
+  return { isPending, mutateAsync };
 };

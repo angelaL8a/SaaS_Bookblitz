@@ -24,16 +24,24 @@ export const companyResolvers = {
     },
 
     users: async (company, _, context) => {
-      if (!context.isAdmin)
-        throw new GraphQLError("You must be an admin!", {
-          extensions: { code: FORBIDDEN_ERROR_CODE },
+      if (context.isAdmin) {
+        const users = await db.userInCompany.findMany({
+          where: { companyId: company.id },
         });
 
-      const users = await db.userInCompany.findMany({
-        where: { companyId: company.id },
-      });
+        return users;
+      } else if (context.isCompanyMember) {
+        const employee = await db.userInCompany.findUnique({
+          where: {
+            userId_companyId: {
+              userId: context?.user.id,
+              companyId: company.id,
+            },
+          },
+        });
 
-      return users;
+        return [employee];
+      }
     },
 
     shifts: async (company, _, context) => {
@@ -59,6 +67,46 @@ export const companyResolvers = {
 
         return shifts;
       }
+    },
+
+    appointments: async (company, _, context) => {
+      if (!context.isCompanyMember)
+        throw new GraphQLError("You must be a member of the company!", {
+          extensions: { code: FORBIDDEN_ERROR_CODE },
+        });
+
+      const client = await db.userInCompany.findUnique({
+        where: {
+          userId_companyId: {
+            userId: context?.user.id,
+            companyId: company.id,
+          },
+        },
+      });
+
+      const apts = await db.appointment.findMany({
+        where: { shift: { companyId: company.id }, clientId: client.id },
+      });
+
+      return apts;
+    },
+  },
+
+  Appointment: {
+    employee: async (appointment) => {
+      const shift = await db.shift.findUnique({
+        where: { id: appointment.shiftId },
+      });
+
+      if (!shift) return null;
+
+      const employee = await db.userInCompany.findUnique({
+        where: {
+          id: shift.employeeId,
+        },
+      });
+
+      return employee;
     },
   },
 
@@ -127,6 +175,58 @@ export const companyResolvers = {
     },
   },
 
+  EmployeeSummary: {
+    hoursAndPayment: async (_, args, context) => {
+      const { fromMonth, toMonth, fromYear, toYear, startDay, endDay } =
+        args.filter;
+
+      const employee = await db.userInCompany.findUnique({
+        where: {
+          userId_companyId: {
+            userId: context?.user.id,
+            companyId: context?.company.id,
+          },
+        },
+      });
+      if (!employee) return;
+
+      const filteredShifts = await db.shift.findMany({
+        where: {
+          date: {
+            gte: new Date(
+              new Date(Date.UTC(fromYear, fromMonth, startDay ?? 1, 0, 0, 0))
+            ),
+            lte: new Date(
+              new Date(Date.UTC(toYear, toMonth, endDay ?? 31, 0, 0, 0))
+            ),
+          },
+          companyId: context?.company.id,
+          employeeId: employee.id,
+        },
+        include: { appointments: true },
+      });
+
+      let totalHours = 0;
+
+      filteredShifts.map((shift) => {
+        const checkInTime = shift.checkInTime.getUTCHours();
+        const checkOutTime = shift.checkOutTime.getUTCHours();
+
+        totalHours += checkOutTime - checkInTime;
+      });
+
+      const avgHours =
+        filteredShifts.length === 0 ? 0 : totalHours / filteredShifts.length;
+
+      return {
+        hoursWorked: totalHours,
+        avgHours: avgHours,
+        grossPay: totalHours * employee.paymentPerHour,
+        paymentPerHour: employee.paymentPerHour,
+      };
+    },
+  },
+
   Query: {
     GetCompany: async (_, args, context) => {
       if (!context.isCompanyMember)
@@ -166,7 +266,75 @@ export const companyResolvers = {
       });
     },
 
+    Company_GetSummary: async (_, args, context) => {
+      if (!context.isCompanyMember)
+        throw new GraphQLError("You must be a member of the company!", {
+          extensions: { code: FORBIDDEN_ERROR_CODE },
+        });
+
+      const employee = await db.userInCompany.findUnique({
+        where: {
+          userId_companyId: {
+            userId: context?.user.id,
+            companyId: context?.company.id,
+          },
+        },
+      });
+      if (!employee) return;
+
+      const { fromMonth, toMonth, startDay, endDay, fromYear, toYear } =
+        args.filter;
+
+      const shifts = await db.shift.findMany({
+        where: {
+          employeeId: employee.id,
+          date: {
+            gte: new Date(
+              new Date(Date.UTC(fromYear, fromMonth, startDay ?? 1, 0, 0, 0))
+            ),
+            lte: new Date(
+              new Date(Date.UTC(toYear, toMonth, endDay ?? 31, 0, 0, 0))
+            ),
+          },
+        },
+        orderBy: {
+          createdAt: "desc",
+        },
+      });
+
+      return {
+        breakdown: shifts.map((shift) => {
+          const totalHours =
+            shift.checkOutTime.getUTCHours() - shift.checkInTime.getUTCHours();
+
+          return {
+            shift,
+            totalHours,
+            payment: totalHours * employee.paymentPerHour,
+          };
+        }),
+      };
+    },
+
     Company_GetEmployeeCompany: async (_, args, context) => {
+      if (!context.isCompanyMember)
+        throw new GraphQLError("You must be a member of the company!", {
+          extensions: { code: FORBIDDEN_ERROR_CODE },
+        });
+
+      const company = await db.company.findUnique({
+        where: { url: args.companyUrl },
+      });
+
+      if (!company)
+        throw new GraphQLError("Company not found!", {
+          extensions: { code: NOT_FOUND_CODE },
+        });
+
+      return company;
+    },
+
+    Company_GetClientCompany: async (_, args, context) => {
       if (!context.isCompanyMember)
         throw new GraphQLError("You must be a member of the company!", {
           extensions: { code: FORBIDDEN_ERROR_CODE },
@@ -232,7 +400,7 @@ export const companyResolvers = {
         },
       });
 
-      // TODO: Send email to new employee
+      // Send email to new employee
       await sendEmail({
         email: user.email,
         subject: "User added to a company",
@@ -306,8 +474,18 @@ export const companyResolvers = {
         },
       });
 
-      // TODO: Send email to new client
-      // email.send(email, password);
+      // Send email to new client
+      await sendEmail({
+        email: user.email,
+        subject: "User added to a company",
+        text: "You were added to a company!",
+        html: `
+          <div>
+            Username: ${username}
+            Password: ${password}
+          </div>
+        `,
+      });
 
       // Add the user as employee to the company
       const client = await db.userInCompany.create({

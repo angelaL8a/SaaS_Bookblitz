@@ -22,7 +22,8 @@ const payrollColumns = [
 
 const PayrollSummary = () => {
   const { data } = useGetCompany();
-  const { dateRange, monthRange, yearRange } = useGetPayrollStore();
+  const { dateRange, monthRange, yearRange, setDays, setMonths, setYears } =
+    useGetPayrollStore();
 
   const { payrollData } = useGetPayroll({
     companyId: data.id,
@@ -53,7 +54,12 @@ const PayrollSummary = () => {
 
       <div className="flex items-start gap-14 pb-[80px]">
         <div className="max-w-[580px] min-w-[580px] mt-10 h-full flex flex-col gap-8">
-          <DatePickerWithRange />
+          <DatePickerWithRange
+            dateRange={dateRange}
+            setDays={setDays}
+            setMonths={setMonths}
+            setYears={setYears}
+          />
 
           {currentEmployee ? (
             <motion.div

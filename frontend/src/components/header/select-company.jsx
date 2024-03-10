@@ -27,10 +27,10 @@ const SelectCompany = () => {
   const { currentCompany, setCurrentCompany } = useGetCurrentCompany();
 
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState(company.id);
+  const [value, setValue] = useState(company?.id);
 
   useEffect(() => {
-    if (data.companies.length > 0 && !currentCompany) {
+    if (data?.companies.length > 0 && !currentCompany) {
       setCurrentCompany(data.companies[0]);
     }
   }, [data, currentCompany, setCurrentCompany]);
@@ -67,7 +67,7 @@ const SelectCompany = () => {
                   setValue(currentValue);
                   setOpen(false);
 
-                  navigate(`/app/${company.url}/admin`);
+                  navigate(`/app/${company.url}/${company.role.toLowerCase()}`);
                 }}
               >
                 <Check

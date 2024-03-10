@@ -15,4 +15,7 @@ export const envs = {
   JWT_SECRET: env.get("JWT_SECRET").required().asString(),
   // Defines the "JWT_SECRET" environment variable and retrieves it from env-var as a string.
   // This variable is required to be present in the .env file and should be a string.
+
+  MAIL_USER: env.get("MAIL_USER").required().asString(),
+  MAIL_PASS: env.get("MAIL_PASS").required().asString(),
 };

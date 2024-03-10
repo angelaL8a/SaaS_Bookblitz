@@ -25,8 +25,10 @@ const AdminSchedule = () => {
     .filter((u) => u.role === "Employee")
     .slice(employeesFilter.start, employeesFilter.end);
 
-  const isFirstPage = employeesFilter.start - 5 < 0;
-  const isLastPage = employeesFilter.end === employees.length;
+  const isFirstPage = employeesFilter.start - 4 < 0;
+  const isLastPage =
+    employeesFilter.end <=
+    data?.users.filter((u) => u.role === "Employee").length;
 
   const prevEmployee = () => {
     if (isFirstPage) {
@@ -34,15 +36,15 @@ const AdminSchedule = () => {
     }
 
     setEmployeesFilter({
-      start: employeesFilter.start - 5,
+      start: employeesFilter.start - 4,
       end: employeesFilter.end - 4,
     });
   };
 
   const nextEmployee = () => {
     setEmployeesFilter({
-      start: employeesFilter.start + 5,
-      end: employeesFilter.end + 5,
+      start: employeesFilter.start + 4,
+      end: employeesFilter.end + 4,
     });
   };
 

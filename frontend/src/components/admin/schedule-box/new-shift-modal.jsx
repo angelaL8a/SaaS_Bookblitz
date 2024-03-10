@@ -257,8 +257,6 @@ const NewShiftModal = ({
     }
   };
 
-  console.log(appointments);
-
   return (
     <Dialog onOpenChange={setDialogOpen} open={dialogOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>

@@ -12,6 +12,8 @@ import {
   Company_GetPayroll,
   Company_GetEmployeeCompany,
   GetCompany,
+  Company_GetClientCompany,
+  Company_GetSummary,
 } from "@/graphql/queries/company";
 import { queryOptions, useMutation, useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
@@ -32,6 +34,14 @@ export const getEmployeeCompany = async (companyUrl) => {
   });
 
   return data.Company_GetEmployeeCompany;
+};
+
+export const getClientCompany = async (companyUrl) => {
+  const data = await client.request(Company_GetClientCompany.toString(), {
+    companyUrl,
+  });
+
+  return data.Company_GetClientCompany;
 };
 
 export const addEmployee = async ({ employeeDto, companyId }) => {
@@ -107,6 +117,15 @@ export const getPayroll = async ({ companyId, filter }) => {
   return data.Company_GetPayroll;
 };
 
+export const getSummary = async ({ companyUrl, filter }) => {
+  const data = await client.request(Company_GetSummary.toString(), {
+    companyUrl,
+    filter,
+  });
+
+  return data.Company_GetSummary;
+};
+
 // Options
 export const getUseGetCompanyOptions = ({ companyUrl, role }) => {
   return queryOptions({
@@ -116,6 +135,8 @@ export const getUseGetCompanyOptions = ({ companyUrl, role }) => {
         return getCompany(companyUrl);
       } else if (role === "Employee") {
         return getEmployeeCompany(companyUrl);
+      } else if (role === "Client") {
+        return getClientCompany(companyUrl);
       }
     },
     enabled: !!role && !!companyUrl,
@@ -236,4 +257,48 @@ export const useGetPayroll = ({
   });
 
   return { payrollData: data, refetch, isPending };
+};
+
+export const useGetSummary = ({
+  companyUrl,
+  fromMonth,
+  toMonth,
+  startDay,
+  endDay,
+  fromYear,
+  toYear,
+}) => {
+  const { data, refetch, isPending } = useQuery({
+    queryKey: [
+      "summary",
+      companyUrl,
+      fromMonth,
+      toMonth,
+      startDay,
+      endDay,
+      fromYear,
+      toYear,
+    ],
+    queryFn: () =>
+      getSummary({
+        companyUrl,
+        filter: { fromMonth, toMonth, startDay, endDay, fromYear, toYear },
+      }),
+    enabled:
+      companyUrl !== undefined &&
+      startDay !== undefined &&
+      endDay !== undefined &&
+      fromMonth !== undefined &&
+      fromMonth !== null &&
+      toMonth !== undefined &&
+      toMonth !== null &&
+      fromYear !== undefined &&
+      toYear !== undefined,
+  });
+
+  return {
+    summary: data,
+    refetch,
+    isPending,
+  };
 };

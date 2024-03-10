@@ -9,6 +9,8 @@ export const companyTypeDefs = gql`
 
     users: [UserInCompany!]!
     shifts: [Shift!]!
+    # Appointments (for the clients)
+    appointments: [Appointment!]!
 
     createdAt: DateTime!
     updatedAt: DateTime!
@@ -83,6 +85,17 @@ export const companyTypeDefs = gql`
     hoursAndPayment(filter: PayrollFilterInput!): HoursAndPayment!
   }
 
+  type SummaryBreakdown {
+    shift: Shift!
+    totalHours: Int!
+    payment: Float!
+  }
+
+  type EmployeeSummary {
+    hoursAndPayment(filter: PayrollFilterInput!): HoursAndPayment!
+    breakdown: [SummaryBreakdown!]!
+  }
+
   input PayrollFilterInput {
     fromMonth: Int!
     toMonth: Int!
@@ -99,6 +112,13 @@ export const companyTypeDefs = gql`
 
     # Employee queries
     Company_GetEmployeeCompany(companyUrl: String!): Company!
+    Company_GetSummary(
+      companyUrl: String!
+      filter: PayrollFilterInput!
+    ): EmployeeSummary!
+
+    # Client queries
+    Company_GetClientCompany(companyUrl: String!): Company!
   }
 
   type Mutation {

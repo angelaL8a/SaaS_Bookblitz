@@ -25,7 +25,7 @@ app.use(cors(corsOptions));
 app.use(
   fileUpload({
     useTempFiles: true,
-    tempFileDir: "/uploads/",
+    tempFileDir: "./uploads/",
   })
 );
 
@@ -145,6 +145,7 @@ const main = async () => {
 
               if (companyCtx) {
                 isCompanyMember = true;
+                company = companyCtx;
               }
             }
           } catch (error) {

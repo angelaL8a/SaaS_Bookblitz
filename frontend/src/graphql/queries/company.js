@@ -75,6 +75,19 @@ export const Company_GetEmployeeCompany = gql`
       url
       role
       createdAt
+      users {
+        ...UserDetails
+        birthDate
+        email
+        telephone
+        position
+        gender
+        address
+        city
+        state
+        zip
+        paymentPerHour
+      }
       shifts {
         id
         checkInTime
@@ -103,6 +116,69 @@ export const Company_GetEmployeeCompany = gql`
   }
 
   ${FRAGMENT_USER}
+`;
+
+export const Company_GetClientCompany = gql`
+  query Company_GetClientCompany($companyUrl: String!) {
+    Company_GetClientCompany(companyUrl: $companyUrl) {
+      id
+      name
+      url
+      role
+      createdAt
+      users {
+        ...UserDetails
+        birthDate
+        email
+        telephone
+        position
+        gender
+        address
+        city
+        state
+        zip
+        paymentPerHour
+      }
+      appointments {
+        id
+        title
+        description
+        referencialImageUrl
+        referencialImageId
+        fee
+        status
+        startTime
+        endTime
+        date
+        employee {
+          ...UserDetails
+        }
+      }
+    }
+  }
+
+  ${FRAGMENT_USER}
+`;
+
+export const Company_GetSummary = gql`
+  query Company_GetSummary($companyUrl: String!, $filter: PayrollFilterInput!) {
+    Company_GetSummary(companyUrl: $companyUrl, filter: $filter) {
+      breakdown {
+        payment
+        totalHours
+        shift {
+          id
+          date
+        }
+      }
+      hoursAndPayment(filter: $filter) {
+        avgHours
+        grossPay
+        hoursWorked
+        paymentPerHour
+      }
+    }
+  }
 `;
 
 export const Company_GetPayroll = gql`

@@ -4,7 +4,11 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { db } from "../../db/index.js";
 import { GraphQLError } from "graphql";
-import { BAD_USER_INPUT_CODE, UNAUTHENTICATED_CODE } from "../error-codes.js";
+import {
+  BAD_USER_INPUT_CODE,
+  FORBIDDEN_ERROR_CODE,
+  UNAUTHENTICATED_CODE,
+} from "../error-codes.js";
 import { envs } from "../../config/env.js";
 import { saltRounds } from "../../config/saltRounds.js";
 
@@ -152,6 +156,44 @@ export const userResolvers = {
       });
       // Return the JWT token
       return token;
+    },
+
+    UpdateProfile: async (_, args, context) => {
+      if (!context.user) {
+        throw new GraphQLError("User not logged in!", {
+          extensions: { code: UNAUTHENTICATED_CODE },
+        });
+      }
+      if (!context.isCompanyMember) {
+        throw new GraphQLError("You must be a member of the company!", {
+          extensions: { code: FORBIDDEN_ERROR_CODE },
+        });
+      }
+
+      const { firstName, lastName, gender, telephone } = args.userDto;
+
+      await db.user.update({
+        where: { id: context.user.id },
+        data: {
+          firstName,
+          lastName,
+        },
+      });
+
+      await db.userInCompany.update({
+        where: {
+          userId_companyId: {
+            userId: context.user.id,
+            companyId: context.company.id,
+          },
+        },
+        data: {
+          gender,
+          telephone,
+        },
+      });
+
+      return "success";
     },
   },
 };

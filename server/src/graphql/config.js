@@ -15,4 +15,7 @@ export const COMPANY_AUTH_ROUTES = [
 export const COMPANY_MEMBER_ROUTES = [
   "GetCompany",
   "Company_GetEmployeeCompany",
+  "Company_GetClientCompany",
+  "Company_GetSummary",
+  "UpdateProfile",
 ];

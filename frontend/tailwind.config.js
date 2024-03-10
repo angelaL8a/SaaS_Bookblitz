@@ -57,6 +57,7 @@ export default {
       fontFamily: {
         poppins: ["'Poppins'", "sans-serif"],
         spline: ["'Spline'", "sans-serif"],
+        petrona: ["'Petrona'", "sans-serif"],
       },
       keyframes: {
         "accordion-down": {

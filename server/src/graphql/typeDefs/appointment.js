@@ -21,6 +21,8 @@ export const appointmentTypeDefs = gql`
 
     client: UserInCompany
     clientId: String
+
+    employee: UserInCompany
   }
 
   type CommentOnAppointment {

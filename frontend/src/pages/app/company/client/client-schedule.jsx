@@ -1,35 +1,34 @@
 import CurrentDate from "@/components/admin/current-date";
+import PageContainer from "@/components/page-container";
 import WeekDay from "@/components/admin/week-day";
 import Appointment from "@/components/employee/appointment";
-import PageContainer from "@/components/page-container";
 import SelectedApt from "@/components/selected-apt";
 import { useAuth } from "@/hooks/use-auth";
-import { useGetCompany } from "@/hooks/use-company";
-import { convertTime, extractDateInfo } from "@/lib/utils";
-import { useGetDays } from "@/store/schedule-store";
-import { ChevronRightIcon, ChevronLeftIcon } from "lucide-react";
 import { AnimatePresence } from "framer-motion";
 import { useState } from "react";
+import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
+import { useGetDays } from "@/store/schedule-store";
+import { useGetCompany } from "@/hooks/use-company";
+import { extractDateInfo } from "@/lib/utils";
 
-const EmployeeSchedule = () => {
+const ClientSchedule = () => {
   const { data: user } = useAuth();
   const { daysOfWeek, nextWeek, prevWeek, currentDay } = useGetDays();
   const { data: company } = useGetCompany();
 
   const [selectedApt, setSelectedApt] = useState(null);
 
-  const shift = company?.shifts.find((s) => {
-    const currentInfo = extractDateInfo(s.date);
+  const filteredApts = company?.appointments.filter((apt) => {
+    const currentInfo = extractDateInfo(apt.date);
 
     if (
       currentDay &&
       currentInfo.dayName === currentDay.dayName &&
-      currentInfo.monthName === currentDay.monthName &&
       currentInfo.dayNumber === currentDay.dayNumber &&
-      currentInfo.year === currentDay.year &&
-      user.id === s.employee.user.id
+      currentInfo.monthName === currentDay.monthName &&
+      currentInfo.year === currentDay.year
     ) {
-      return s;
+      return apt;
     }
   });
 
@@ -60,7 +59,12 @@ const EmployeeSchedule = () => {
 
             <div className="grid grid-cols-7 rounded-[24px] w-full week_days_card">
               {daysOfWeek.map((day, index) => (
-                <WeekDay key={index} day={day} canChange />
+                <WeekDay
+                  key={index}
+                  day={day}
+                  activeClassName="bg-gradient-to-b from-[#7BF4F4] to-[#9EFFFF]"
+                  canChange
+                />
               ))}
             </div>
 
@@ -73,27 +77,19 @@ const EmployeeSchedule = () => {
           </div>
 
           <div className="bg-gradient-to-b from-[rgba(246,254,254,0.6)] from-100% via-[rgba(235,235,235,0.29)] via-[32.16%] to-[rgba(255,255,255,0.66)] to-[66%] shadow-[0px_4px_42.2px_-19px_rgba(0,0,0,0.35)] rounded-[24px] px-8 py-5 h-[600px] overflow-auto">
-            {shift ? (
-              <>
-                <div className="text-[#515151]">
-                  {convertTime(shift.checkInTime)} -{" "}
-                  {convertTime(shift.checkOutTime)}
-                </div>
-
-                <div className="grid grid-cols-3 gap-10 mt-5">
-                  {shift.appointments.map((apt) => (
-                    <Appointment
-                      key={apt.id}
-                      apt={apt}
-                      setSelectedApt={setSelectedApt}
-                    />
-                  ))}
-                </div>
-              </>
+            {filteredApts.length > 0 ? (
+              <div className="grid grid-cols-3 gap-10 mt-5">
+                {filteredApts?.map((apt) => (
+                  <Appointment
+                    key={apt.id}
+                    apt={apt}
+                    setSelectedApt={setSelectedApt}
+                  />
+                ))}
+              </div>
             ) : (
               <div className="flex items-center justify-center h-full text-xl max-w-[500px] text-center mx-auto text-[rgba(81,81,81,0.7)]">
-                Nothing to see here! You&apos;ve completed all your shifts like
-                a champ. Time to kick back and relax! 😎
+                Nothing to see here!
               </div>
             )}
           </div>
@@ -103,9 +99,9 @@ const EmployeeSchedule = () => {
           <AnimatePresence>
             {selectedApt ? (
               <SelectedApt
+                key="apt_modal_anim"
                 selectedApt={selectedApt}
                 setSelectedApt={setSelectedApt}
-                key="apt_modal_anim"
               />
             ) : (
               <></>
@@ -117,4 +113,4 @@ const EmployeeSchedule = () => {
   );
 };
 
-export default EmployeeSchedule;
+export default ClientSchedule;

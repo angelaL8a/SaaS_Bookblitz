@@ -7,13 +7,7 @@ const HomePage = () => {
   const { currentCompany } = useGetCurrentCompany();
 
   const getUrlRole = (role) => {
-    if (role === "Admin") {
-      return "admin";
-    } else if (role === "Client") {
-      return "client";
-    } else if (role === "Employee") {
-      return "employee";
-    }
+    return role.toLowerCase();
   };
 
   if (data) {

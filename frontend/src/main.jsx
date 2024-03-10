@@ -27,6 +27,12 @@ import PayrollSummary from "./pages/app/company/admin/payroll-summary";
 import HomePage from "./pages/app/home-page";
 import EmployeeSchedule from "./pages/app/company/employee/employee-schedule";
 import EmployeeLayout from "./layouts/EmployeeLayout";
+import Summary from "./pages/app/company/employee/summary";
+import ClientLayout from "./layouts/ClientLayout";
+import ClientSchedule from "./pages/app/company/client/client-schedule";
+import ProfileLayout from "./layouts/ProfileLayout";
+import ProfilePage from "./pages/app/company/profile";
+import SettingsPage from "./pages/app/company/profile/settings";
 
 // Define the router configuration
 const router = createBrowserRouter([
@@ -67,13 +73,28 @@ const router = createBrowserRouter([
             ],
           },
           {
-            path: "/app/:companyUrl/client",
-            element: <div>App client</div>,
+            path: "client",
+            element: <ClientLayout />,
+            children: [{ path: "", element: <ClientSchedule /> }],
           },
           {
-            path: "/app/:companyUrl/employee",
+            path: "employee",
             element: <EmployeeLayout />,
-            children: [{ path: "", element: <EmployeeSchedule /> }],
+            children: [
+              { path: "", element: <EmployeeSchedule /> },
+              { path: "summary", element: <Summary /> },
+            ],
+          },
+          {
+            path: "profile",
+            element: <ProfileLayout />,
+            children: [
+              { path: "", element: <ProfilePage /> },
+              {
+                path: "settings",
+                element: <SettingsPage />,
+              },
+            ],
           },
         ],
       },
