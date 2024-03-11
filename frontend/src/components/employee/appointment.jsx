@@ -23,7 +23,7 @@ const Appointment = ({ apt, setSelectedApt }) => {
     <button
       type="button"
       onClick={() => setSelectedApt(apt)}
-      className="overflow-hidden rounded-lg shadow-[0px_9.92px_39.69px_-18px_rgba(0,0,0,0.25)]"
+      className="overflow-hidden rounded-lg shadow-[0px_9.92px_39.69px_-18px_rgba(0,0,0,0.25)] bg-white"
     >
       <CustomImage
         src={apt.referencialImageUrl}
@@ -48,7 +48,9 @@ const Appointment = ({ apt, setSelectedApt }) => {
           </div>
         </div>
 
-        <h3 className="text-[#2B2B2B] text-lg mt-6 leading-3">{apt.title}</h3>
+        <h3 className="text-[#2B2B2B] text-lg mt-6 leading-5 text-start">
+          {apt.title}
+        </h3>
 
         <div className="text-[#515151]">
           {convertTime(apt.startTime)} - {convertTime(apt.endTime)}

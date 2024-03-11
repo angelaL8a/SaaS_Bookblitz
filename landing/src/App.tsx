@@ -8,7 +8,7 @@ const App = () => {
       {/* Header */}
       <Header />
 
-      <div className="max-w-[1200px] mx-auto px-2">
+      <div className="max-w-[1000px] mx-auto px-2">
         {/* Hero */}
         <Hero />
 

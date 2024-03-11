@@ -8,7 +8,7 @@ import {
 
 const Hero = () => {
   return (
-    <div className="mt-5 max-w-[900px] mx-auto">
+    <div className="mt-5">
       <h1 className="text-5xl text-center">All in ONE</h1>
 
       <Carousel className="w-full mt-10 overflow-hidden rounded-lg">

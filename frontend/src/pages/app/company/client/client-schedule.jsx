@@ -34,8 +34,8 @@ const ClientSchedule = () => {
 
   return (
     <PageContainer className="mt-8">
-      <div className="flex items-start mt-3 gap-14">
-        <div className="w-[70%] flex-1 flex flex-col gap-1">
+      <div className="flex items-start mt-3 gap-14 h-[870px]">
+        <div className="w-[70%] flex-1 h-full flex flex-col gap-1">
           <h1 className="text-4xl text-[#828282] font-poppins text-center">
             Reservations
           </h1>
@@ -49,7 +49,7 @@ const ClientSchedule = () => {
             />
           </div>
 
-          <div className="flex items-center flex-1 gap-1 my-4">
+          <div className="flex items-center gap-1 my-4">
             <button onClick={prevWeek} className="duration-150 hover:scale-125">
               <ChevronLeftIcon
                 className="w-8 h-8 text-muted-foreground"
@@ -76,7 +76,7 @@ const ClientSchedule = () => {
             </button>
           </div>
 
-          <div className="bg-gradient-to-b from-[rgba(246,254,254,0.6)] from-100% via-[rgba(235,235,235,0.29)] via-[32.16%] to-[rgba(255,255,255,0.66)] to-[66%] shadow-[0px_4px_42.2px_-19px_rgba(0,0,0,0.35)] rounded-[24px] px-8 py-5 h-[600px] overflow-auto">
+          <div className="bg-gradient-to-b from-[rgba(246,254,254,0.6)] from-100% via-[rgba(235,235,235,0.29)] via-[32.16%] to-[rgba(255,255,255,0.66)] to-[66%] shadow-[0px_4px_42.2px_-19px_rgba(0,0,0,0.35)] rounded-[24px] px-8 py-5 h-[600px] overflow-auto flex-1">
             {filteredApts.length > 0 ? (
               <div className="grid grid-cols-3 gap-10 mt-5">
                 {filteredApts?.map((apt) => (
@@ -95,7 +95,7 @@ const ClientSchedule = () => {
           </div>
         </div>
 
-        <div className="w-[30%] mt-5">
+        <div className="w-[30%] h-full">
           <AnimatePresence>
             {selectedApt ? (
               <SelectedApt

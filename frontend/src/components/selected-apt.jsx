@@ -25,63 +25,65 @@ const SelectedApt = ({ selectedApt, setSelectedApt }) => {
       animate={{ scale: 1 }}
       exit={{ scale: 0 }}
       transition={{ duration: 0.1, ease: "easeInOut" }}
-      className="bg-gradient-to-b from-[#FFFFFF] from-100% via-[#F6FCFF] via-[77%] to-[#FAFDFF] to-[88%] shadow-[0px_4px_37.9px_-5px_rgba(0,0,0,0.07)] rounded-lg p-5 h-full"
+      className="bg-gradient-to-b from-[#FFFFFF] from-100% via-[#F6FCFF] via-[77%] to-[#FAFDFF] to-[88%] shadow-[0px_4px_37.9px_-5px_rgba(0,0,0,0.07)] rounded-lg py-8 px-8 h-full flex flex-col justify-between"
     >
-      <div className="relative">
-        <CustomImage
-          src={selectedApt.referencialImageUrl}
-          alt={selectedApt.title}
-          className={cn(
-            "rounded-md relative w-full aspect-w-16 aspect-h-9",
-            bgColor.color
-          )}
-        />
-
-        <div className="absolute flex justify-center gap-3 right-3 bottom-3 left-3">
-          <AptInfo label={dateInfo.monthName.slice(0, 3)}>
-            {dateInfo.dayNumber}
-          </AptInfo>
-
-          <AptInfo label="Hour">
-            {convertTime(selectedApt.startTime)} -{" "}
-            {convertTime(selectedApt.endTime)}
-          </AptInfo>
-
-          <AptInfo label="Price">${selectedApt.fee}</AptInfo>
-        </div>
-      </div>
-
-      <div className="mt-4">
-        <p className="mb-1 text-xs text-[#515151]">Title</p>
-        <h2 className="text-[#2B2B2B]">{selectedApt.title}</h2>
-      </div>
-
-      <div className="mt-4">
-        <p className="mb-1 text-xs text-[#515151]">Description</p>
-        <h2 className="text-[#2B2B2B]">{selectedApt.description}</h2>
-      </div>
-
-      <div className="flex items-center gap-5 mt-8">
-        <div className="flex flex-col items-center w-1/2 gap-1">
-          {user?.user ? (
-            <Avatar
-              firstName={user.user.firstName}
-              lastName={user.user.lastName}
-              userImageUrl={user.user.userImageUrl}
-              name={user.user.name}
-            />
-          ) : null}
-
-          <Rating
-            color={"#009A7F"}
-            value={Math.floor(Math.random() * (5 - 1 + 1)) + 1}
+      <div className="flex flex-col">
+        <div className="relative">
+          <CustomImage
+            src={selectedApt.referencialImageUrl}
+            alt={selectedApt.title}
+            className={cn(
+              "rounded-md relative w-full aspect-w-16 aspect-h-9",
+              bgColor.color
+            )}
           />
+
+          <div className="absolute flex justify-center gap-3 right-3 bottom-3 left-3">
+            <AptInfo label={dateInfo.monthName.slice(0, 3)}>
+              {dateInfo.dayNumber}
+            </AptInfo>
+
+            <AptInfo label="Hour">
+              {convertTime(selectedApt.startTime)} -{" "}
+              {convertTime(selectedApt.endTime)}
+            </AptInfo>
+
+            <AptInfo label="Price">${selectedApt.fee}</AptInfo>
+          </div>
         </div>
 
-        <button className="flex items-center text-[#515151] rounded-sm h-12 feedback_button bg-[rgba(246,248,255,0.43)] px-3 py-8">
-          <MessageSquareIcon className="w-5 h-5 mr-2" />
-          Leave Feedback
-        </button>
+        <div className="mt-4">
+          <p className="mb-1 text-xs text-[#515151]">Title</p>
+          <h2 className="text-[#2B2B2B] text-xl">{selectedApt.title}</h2>
+        </div>
+
+        <div className="mt-4">
+          <p className="mb-1 text-xs text-[#515151]">Description</p>
+          <h2 className="text-[#2B2B2B] text-xl">{selectedApt.description}</h2>
+        </div>
+
+        <div className="flex items-center gap-5 mt-10">
+          <div className="flex flex-col items-center w-1/2 gap-1">
+            {user?.user ? (
+              <Avatar
+                firstName={user.user.firstName}
+                lastName={user.user.lastName}
+                userImageUrl={user.user.userImageUrl}
+                name={user.user.name}
+              />
+            ) : null}
+
+            <Rating
+              color={"#009A7F"}
+              value={Math.floor(Math.random() * (5 - 1 + 1)) + 1}
+            />
+          </div>
+
+          <button className="flex items-center text-[#515151] rounded-sm h-12 feedback_button bg-[rgba(246,248,255,0.43)] px-3 py-8">
+            <MessageSquareIcon className="w-5 h-5 mr-2" />
+            Leave Feedback
+          </button>
+        </div>
       </div>
 
       <div className="flex justify-center mt-8">
