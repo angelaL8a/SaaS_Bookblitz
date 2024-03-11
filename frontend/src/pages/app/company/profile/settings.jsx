@@ -69,7 +69,7 @@ const SettingsPage = () => {
 
   return (
     <PageContainer>
-      <div className="relative flex justify-between mt-10 rounded-lg profile_bg max-w-[1300px] mx-auto">
+      <div className="relative flex justify-between mt-10 rounded-lg profile_bg max-w-[1300px] mx-auto shadow-[0px_0px_11px_0px_rgba(0,0,0,0.08)]">
         <div className="flex items-start justify-between w-full gap-10 p-20">
           <div className="w-1/2">
             <CustomImage
@@ -79,7 +79,7 @@ const SettingsPage = () => {
           </div>
 
           <div className="flex flex-col items-start w-1/2 gap-2">
-            <h1 className="text-[rgba(90,90,90,0.65)] text-4xl">
+            <h1 className="text-[rgba(90,90,90,0.65)] mb-2 text-4xl">
               Administrator
             </h1>
 
@@ -107,10 +107,10 @@ const SettingsPage = () => {
               >
                 <SelectTrigger
                   className={cn(
-                    "w-full h-auto font-normal bg-white shadow-[0px_4px_3.3px_0px_rgba(0,0,0,0.03)] px-3 py-3 rounded-md text-[rgba(51,51,51,0.41)] border-none text-lg"
+                    "w-full h-auto font-normal bg-white profile_input_settings px-3 py-5 rounded-md text-[rgba(51,51,51,0.41)] border-none text-lg"
                   )}
                 >
-                  <SelectValue placeholder="Select" />
+                  <SelectValue placeholder="Select Gender" />
                 </SelectTrigger>
 
                 <SelectContent>
@@ -131,7 +131,7 @@ const SettingsPage = () => {
               <button
                 type="button"
                 onClick={() => updateProfile()}
-                className="bg-[rgba(240,240,243,1)] px-10 py-2 rounded-full text-[#828282] disabled:cursor-not-allowed gap-2 flex items-center"
+                className="bg-[rgba(240,240,243,1)] px-10 py-2 rounded-full text-[#828282] disabled:cursor-not-allowed gap-2 flex items-center profile_input_settings"
                 disabled={
                   isPending || !firstName || !lastName || !gender || !telephone
                 }
@@ -147,7 +147,7 @@ const SettingsPage = () => {
         </div>
 
         <XIcon
-          className="absolute w-10 h-10 cursor-pointer right-4 top-4"
+          className="absolute w-10 h-10 cursor-pointer right-4 top-4 text-muted-foreground"
           onClick={() =>
             navigate(`/app/${company?.url}/${company?.role.toLowerCase()}`)
           }
@@ -166,7 +166,7 @@ const InputSettings = ({ label, onChange, value, children }) => {
         children
       ) : (
         <input
-          className="w-full px-5 py-4 bg-white rounded-lg outline-none font-poppins"
+          className="w-full px-5 py-4 bg-white rounded-lg outline-none profile_input_settings font-poppins"
           onChange={onChange}
           value={value}
         />

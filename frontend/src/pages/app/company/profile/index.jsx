@@ -17,7 +17,7 @@ const ProfilePage = () => {
 
   return (
     <PageContainer>
-      <div className="relative flex justify-between mt-10 rounded-lg profile_bg max-w-[1300px] mx-auto">
+      <div className="relative flex justify-between mt-10 rounded-lg profile_bg max-w-[1300px] mx-auto shadow-[0px_0px_11px_0px_rgba(0,0,0,0.08)]">
         <div className="flex flex-col items-start gap-5 px-4 py-20 mx-auto">
           <CustomImage
             src={user?.userImageUrl}
@@ -25,7 +25,9 @@ const ProfilePage = () => {
             className="rounded-full h-[180px] w-[180px]"
           />
 
-          <h1 className="text-4xl font-bold">{user?.name}</h1>
+          <h1 className="text-4xl font-semibold font-poppins text-muted-foreground">
+            {user?.name}
+          </h1>
 
           <p className="text-[rgba(147,147,147,0.8)] text-3xl">
             {company?.role}
@@ -61,7 +63,7 @@ const ProfilePage = () => {
         </div>
 
         <XIcon
-          className="absolute w-10 h-10 cursor-pointer right-4 top-4"
+          className="absolute w-10 h-10 cursor-pointer text-muted-foreground right-4 top-4"
           onClick={() =>
             navigate(`/app/${company?.url}/${company?.role.toLowerCase()}`)
           }

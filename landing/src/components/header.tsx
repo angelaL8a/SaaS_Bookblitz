@@ -1,5 +1,5 @@
-import React from "react";
-import { cn } from "../utils";
+import { cn } from "@/lib/utils";
+import React, { HTMLAttributeAnchorTarget } from "react";
 
 const Header = () => {
   return (
@@ -10,7 +10,11 @@ const Header = () => {
 
       <HeaderButton>FAQs</HeaderButton>
 
-      <HeaderButton className="bg-gradient-to-b from-[rgba(212,146,255,0.79)] to-[rgba(212,146,255,0.79)] text-[#F5F5F5]">
+      <HeaderButton
+        href="https://sereinteam.vercel.app"
+        target="_blank"
+        className="bg-gradient-to-b from-[rgba(212,146,255,0.79)] to-[rgba(212,146,255,0.79)] text-[#F5F5F5]"
+      >
         Start Now!
       </HeaderButton>
     </header>
@@ -20,14 +24,25 @@ const Header = () => {
 const HeaderButton = ({
   children,
   className,
+  href,
+  target,
 }: {
   children: React.ReactNode;
   className?: string;
+  href?: string;
+  target?: HTMLAttributeAnchorTarget;
 }) => {
   return (
-    <button className={cn("bg-[#FBFBFB] px-10 py-2 rounded-xl", className)}>
+    <a
+      href={href}
+      target={target}
+      className={cn(
+        "bg-[#FBFBFB] px-10 py-2 rounded-xl header_btn_shadow",
+        className
+      )}
+    >
       {children}
-    </button>
+    </a>
   );
 };
 

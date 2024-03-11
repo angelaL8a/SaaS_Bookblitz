@@ -216,8 +216,14 @@
     #80e0ffc5 50%,
     #fafdffe0 100%
   );
+  /* box-shadow: 0px 0px 11px 0px #00000014; */
 }
 
 .page_profile_bg {
   background-image: var(--profile-page-bg);
+}
+
+.profile_input_settings {
+  box-shadow: 2.1789px 2.1789px 6.5368px 0px #aeaec066,
+    -2.1789px -2.1789px 6.5368px 0px #fff;
 }
