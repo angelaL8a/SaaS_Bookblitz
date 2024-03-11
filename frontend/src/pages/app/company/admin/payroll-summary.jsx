@@ -173,7 +173,7 @@ const PayrollSummary = () => {
           )}
         </div>
 
-        <div className="flex-1">
+        <div className="sticky flex-1 top-10">
           <Table
             columns={payrollColumns}
             headerClassName="[background:linear-gradient(180deg,#D3FFFC_0%,#A0FFFF_100%)]"

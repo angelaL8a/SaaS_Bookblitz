@@ -1,7 +1,11 @@
 import bcrypt from "bcrypt";
 import { GraphQLError } from "graphql";
 import { db } from "../../db/index.js";
-import { FORBIDDEN_ERROR_CODE, NOT_FOUND_CODE } from "../error-codes.js";
+import {
+  BAD_USER_INPUT_CODE,
+  FORBIDDEN_ERROR_CODE,
+  NOT_FOUND_CODE,
+} from "../error-codes.js";
 import { saltRounds } from "../../config/saltRounds.js";
 import { generateRandomPassword } from "../../utils/generate-random-password.js";
 import { generateRandomUsername } from "../../utils/generate-random-username.js";
@@ -388,6 +392,15 @@ export const companyResolvers = {
         lastName
       );
 
+      const emailExists = await db.user.findUnique({
+        where: { email },
+      });
+      if (emailExists) {
+        throw new GraphQLError("Email already exists", {
+          extensions: { code: BAD_USER_INPUT_CODE },
+        });
+      }
+
       const user = await db.user.create({
         data: {
           firstName,
@@ -406,10 +419,25 @@ export const companyResolvers = {
         subject: "User added to a company",
         text: "You were added to a company!",
         html: `
-          <div>
-            Username: ${username}
-            Password: ${password}
-          </div>
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+        <h2 style="color: #333; text-align: center;">Welcome to SereinTeam!</h2>
+        <p style="line-height: 1.6; color: #555;">Dear ${firstName} ${lastName},</p>
+        
+        <p style="line-height: 1.6; color: #555;">You have been added to a company on SereinTeam. Here are your login details:</p>
+        
+        <ul style="list-style: none; padding: 0;">
+          <li><strong>Username:</strong> ${username}</li>
+          <li><strong>Password:</strong> ${password}</li>
+        </ul>
+      
+        <p style="line-height: 1.6; color: #555;">Please keep this information secure and do not share it with others.</p>
+      
+        <p style="line-height: 1.6; color: #555;">You can log in using your credentials at <a href="https://sereinteam.vercel.app">SereinTeam</a>.</p>
+      
+        <p style="line-height: 1.6; color: #555;">Thank you for joining SereinTeam!</p>
+      
+        <p style="line-height: 1.6; color: #555;">Best regards,<br/>The SereinTeam Team</p>
+      </div>
         `,
       });
 
@@ -462,6 +490,15 @@ export const companyResolvers = {
         lastName
       );
 
+      const emailExists = await db.user.findUnique({
+        where: { email },
+      });
+      if (emailExists) {
+        throw new GraphQLError("Email already exists", {
+          extensions: { code: BAD_USER_INPUT_CODE },
+        });
+      }
+
       const user = await db.user.create({
         data: {
           firstName,
@@ -477,13 +514,28 @@ export const companyResolvers = {
       // Send email to new client
       await sendEmail({
         email: user.email,
-        subject: "User added to a company",
-        text: "You were added to a company!",
+        subject: "You were added to a company - SereinTeam",
+        text: "You were added to a company - SereinTeam",
         html: `
-          <div>
-            Username: ${username}
-            Password: ${password}
-          </div>
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+        <h2 style="color: #333; text-align: center;">Welcome to SereinTeam!</h2>
+        <p style="line-height: 1.6; color: #555;">Dear ${firstName} ${lastName},</p>
+        
+        <p style="line-height: 1.6; color: #555;">You have been added to a company on SereinTeam. Here are your login details:</p>
+        
+        <ul style="list-style: none; padding: 0;">
+          <li><strong>Username:</strong> ${username}</li>
+          <li><strong>Password:</strong> ${password}</li>
+        </ul>
+      
+        <p style="line-height: 1.6; color: #555;">Please keep this information secure and do not share it with others.</p>
+      
+        <p style="line-height: 1.6; color: #555;">You can log in using your credentials at <a href="https://sereinteam.vercel.app">SereinTeam</a>.</p>
+      
+        <p style="line-height: 1.6; color: #555;">Thank you for joining SereinTeam!</p>
+      
+        <p style="line-height: 1.6; color: #555;">Best regards,<br/>The SereinTeam Team</p>
+      </div>
         `,
       });
 

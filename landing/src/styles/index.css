@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.page_bg {
+  background-image: radial-gradient(
+    ellipse 863.9999999999999px 558.5px at 864px 558.4999999999999px,
+    #f3fbfbff 0%,
+    #f3cfffff 34%,
+    #e8fffeff 100%
+  );
+}

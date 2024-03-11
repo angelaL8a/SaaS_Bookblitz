@@ -1,10 +1,23 @@
-import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons";
+/* eslint-disable react/prop-types */
+import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import { DayPicker } from "react-day-picker";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
+import { useState } from "react";
+import { useNavigation } from "react-day-picker";
+import { format, subYears } from "date-fns";
+import { Dialog, DialogContent, DialogTrigger } from "./dialog";
 
-// eslint-disable-next-line react/prop-types
-function Calendar({ className, classNames, showOutsideDays = true, ...props }) {
+function Calendar({
+  className,
+  classNames,
+  onSelect,
+  selected,
+  showOutsideDays = true,
+  ...props
+}) {
+  const [selectedYear, setSelectedYear] = useState(2024);
+
   return (
     <DayPicker
       showOutsideDays={showOutsideDays}
@@ -52,11 +65,117 @@ function Calendar({ className, classNames, showOutsideDays = true, ...props }) {
       components={{
         IconLeft: () => <ChevronLeftIcon className="w-4 h-4" />,
         IconRight: () => <ChevronRightIcon className="w-4 h-4" />,
+        CaptionLabel: ({ displayMonth }) => (
+          <Caption
+            onSelect={onSelect}
+            displayMonth={displayMonth}
+            setSelectedYear={setSelectedYear}
+            selectedYear={selectedYear}
+          />
+        ),
       }}
+      onSelect={onSelect}
+      selected={selected}
       {...props}
     />
   );
 }
 Calendar.displayName = "Calendar";
+
+const Caption = ({ onSelect, displayMonth, selectedYear, setSelectedYear }) => {
+  const currentYear = new Date().getFullYear();
+  const startYear = 1900;
+  const years = Array.from(
+    { length: currentYear - startYear + 1 },
+    (_, index) => startYear + index
+  );
+
+  const [yearFilter, setYearFilter] = useState({
+    start: 116,
+    end: 125,
+  });
+
+  const { goToDate } = useNavigation();
+
+  const isFirstPage = yearFilter.start - 4 < 0;
+  const isLastPage = yearFilter.end >= years.length;
+
+  const handleYearClick = (year) => {
+    setSelectedYear(year);
+
+    const newDate = subYears(new Date(), new Date().getUTCFullYear() - year);
+    onSelect(newDate);
+    goToDate(newDate);
+  };
+
+  const handlePrevYear = () => {
+    if (isFirstPage) {
+      return;
+    }
+
+    setYearFilter({
+      start: yearFilter.start - 4,
+      end: yearFilter.end - 4,
+    });
+  };
+
+  const handleNextYear = () => {
+    setYearFilter({
+      start: yearFilter.start + 4,
+      end: yearFilter.end + 4,
+    });
+  };
+
+  const visibleYears = years.slice(yearFilter.start, yearFilter.end);
+
+  console.log(selectedYear);
+
+  return (
+    <Dialog modal={false}>
+      <DialogTrigger asChild>
+        <div className="p-2 text-center cursor-pointer hover:opacity-60">
+          {format(displayMonth, "MMM yyy")}
+        </div>
+      </DialogTrigger>
+
+      <DialogContent className="gap-0 p-0">
+        <div className="flex">
+          <button
+            onClick={handlePrevYear}
+            disabled={isFirstPage}
+            className="flex items-center justify-center w-1/2 p-2 hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            <ChevronLeftIcon className="w-5 h-5" />
+          </button>
+
+          <button
+            onClick={handleNextYear}
+            disabled={isLastPage}
+            className="flex items-center justify-center w-1/2 p-2 hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            <ChevronRightIcon className="w-5 h-5" />
+          </button>
+        </div>
+
+        <div className="grid grid-cols-3">
+          {visibleYears.map((year) => (
+            <button
+              key={year}
+              onClick={() => handleYearClick(year)}
+              className={cn(
+                "p-2",
+                selectedYear === year
+                  ? "bg-blue-300 text-white"
+                  : "hover:bg-gray-100"
+              )}
+            >
+              {year}
+            </button>
+          ))}
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+};
 
 export { Calendar };

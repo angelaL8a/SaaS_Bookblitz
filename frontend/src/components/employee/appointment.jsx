@@ -8,9 +8,12 @@ import {
   gradientPastelColors,
 } from "@/lib/utils";
 import Avatar from "../avatar";
+import { useMemo } from "react";
 
 const Appointment = ({ apt, setSelectedApt }) => {
-  const bgColor = shuffle(gradientPastelColors()).pop();
+  const bgColor = useMemo(() => {
+    return shuffle(gradientPastelColors()).pop();
+  }, []);
 
   const dateInfo = extractDateInfo(apt.date);
 
@@ -58,7 +61,9 @@ const Appointment = ({ apt, setSelectedApt }) => {
             userImageUrl={user?.userImageUrl}
             name={user?.name}
           />
-        ) : null}
+        ) : (
+          <div>No client.</div>
+        )}
       </div>
     </button>
   );

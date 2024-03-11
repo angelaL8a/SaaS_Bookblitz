@@ -19,7 +19,7 @@ const DatePicker = ({ date, setDate, label, className }) => {
         >
           <CalendarIcon className="w-5 h-5 mr-2" />
 
-          <div className="flex-1 truncate text-lg">
+          <div className="flex-1 text-lg truncate">
             {date ? format(date, "PP") : label ?? "Pick a date"}
           </div>
         </Button>

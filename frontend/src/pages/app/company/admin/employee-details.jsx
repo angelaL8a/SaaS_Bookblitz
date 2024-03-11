@@ -20,6 +20,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import PreviewMember from "@/components/admin/preview-member";
 
 const employeeDetailsColumns = [
   "Name",
@@ -152,9 +153,14 @@ const EmployeeDetails = () => {
                     name: "More",
                     element: (
                       <div className="flex items-center justify-end gap-2 pr-6">
-                        <button className="flex items-center justify-center w-8 h-8 rounded-sm hover:bg-[rgba(255,255,255,0.31)] hover:shadow-[0px_2px_5px_0px_rgba(0,0,0,0.10)]">
-                          <EyeIcon className="w-5 h-5 text-muted-foreground" />
-                        </button>
+                        <PreviewMember member={employee}>
+                          <button
+                            type="button"
+                            className="flex items-center justify-center w-8 h-8 rounded-sm hover:bg-[rgba(255,255,255,0.31)] hover:shadow-[0px_2px_5px_0px_rgba(0,0,0,0.10)]"
+                          >
+                            <EyeIcon className="w-5 h-5 text-muted-foreground" />
+                          </button>
+                        </PreviewMember>
 
                         <AlertDialog>
                           <AlertDialogTrigger asChild>

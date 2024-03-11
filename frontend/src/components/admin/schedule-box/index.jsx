@@ -15,7 +15,12 @@ import {
   ContextMenuSeparator,
   ContextMenuTrigger,
 } from "@/components/ui/context-menu";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { shuffle } from "lodash";
 import { TrashIcon } from "lucide-react";
 import { PencilIcon } from "lucide-react";
@@ -32,6 +37,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { useToast } from "@/components/ui/use-toast";
+import { Button } from "@/components/ui/button";
 
 const ScheduleBox = ({ user, day }) => {
   const { data: company } = useGetCompany();
@@ -141,6 +147,19 @@ const Shift = ({ shift, user, day }) => {
             withCloseButton={false}
             className="max-w-[760px] gap-0 bg-gradient-to-b from-[rgba(255,255,255,0.97)] from-0% via-[rgba(242,236,255,0.97)] via-50% to-[rgba(248,244,255,0.89)] to-100% shadow-[0px_9.923px_16.8px_-3px_rgba(0,0,0,0.10)] py-5 pb-14 px-16 max-h-[800px] overflow-y-auto font-poppins"
           >
+            <DialogClose asChild>
+              <Button
+                type="button"
+                onClick={() => {
+                  setEditModal(true);
+                }}
+                className="absolute px-5 left-3 top-3"
+                variant="auth"
+              >
+                Edit
+              </Button>
+            </DialogClose>
+
             <h1 className="text-[40px] text-[#8A8888] text-center font-poppins font-light">
               Appointments
             </h1>
@@ -264,7 +283,7 @@ const Shift = ({ shift, user, day }) => {
               onClick={() => {
                 deleteShift();
               }}
-              className="text-red-500"
+              className="text-white bg-red-300"
             >
               Delete shift
             </AlertDialogAction>

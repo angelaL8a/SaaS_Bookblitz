@@ -25,7 +25,7 @@ const SelectedApt = ({ selectedApt, setSelectedApt }) => {
       animate={{ scale: 1 }}
       exit={{ scale: 0 }}
       transition={{ duration: 0.1, ease: "easeInOut" }}
-      className="bg-gradient-to-b from-[#FFFFFF] from-100% via-[#F6FCFF] via-[77%] to-[#FAFDFF] to-[88%] shadow-[0px_4px_37.9px_-5px_rgba(0,0,0,0.07)] rounded-lg p-5"
+      className="bg-gradient-to-b from-[#FFFFFF] from-100% via-[#F6FCFF] via-[77%] to-[#FAFDFF] to-[88%] shadow-[0px_4px_37.9px_-5px_rgba(0,0,0,0.07)] rounded-lg p-5 h-full"
     >
       <div className="relative">
         <CustomImage
