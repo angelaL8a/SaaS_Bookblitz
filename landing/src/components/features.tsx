@@ -1,6 +1,6 @@
 const Features = () => {
   return (
-    <div className="flex w-full gap-4 my-16">
+    <div className="flex w-full gap-4 pb-16 mt-16">
       <div className="h-[450px] w-[250px] shadow-[0px_4px_22.7px_0px_#00000017] rounded-xl p-2">
         Referencial Image
       </div>

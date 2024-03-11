@@ -1,6 +1,10 @@
+import Faq from "./components/faq";
 import Features from "./components/features";
+import Footer from "./components/footer";
 import Header from "./components/header";
 import Hero from "./components/hero";
+import Testimonials from "./components/testimonials";
+import Videos from "./components/videos";
 
 const App = () => {
   return (
@@ -14,7 +18,19 @@ const App = () => {
 
         {/* Features */}
         <Features />
+
+        {/* Testimonials */}
       </div>
+
+      <Testimonials />
+
+      <div className="max-w-[1000px] mx-auto px-2 pb-20">
+        <Videos />
+
+        <Faq />
+      </div>
+
+      <Footer />
     </div>
   );
 };
