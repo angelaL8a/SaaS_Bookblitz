@@ -152,7 +152,7 @@ export const userResolvers = {
 
       // Generate JWT token with user ID payload
       const token = jwt.sign({ id: user.id }, envs.JWT_SECRET, {
-        expiresIn: "30d",
+        // expiresIn: "30d",
       });
       // Return the JWT token
       return token;
